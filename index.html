@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Last Thursday's Reality</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Game container */
+        .game-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-image: url('images/bedroom.jpg'); /* Replace with your image path if needed */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Dark overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        /* Game title */
+        .game-title {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-size: 24px;
+            font-family: Georgia, serif;
+            z-index: 10;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        /* Navigation buttons */
+        .nav-buttons {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button.active {
+            background-color: white;
+            color: black;
+        }
+
+        .nav-button:not(.active) {
+            background-color: rgba(50, 50, 50, 0.8);
+            color: white;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-button.notify {
+            position: relative;
+        }
+
+        .nav-button.notify::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 12px;
+            height: 12px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .nav-button.pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(66, 153, 225, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(66, 153, 225, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(66, 153, 225, 0);
+            }
+        }
+
+        /* Content area */
+        .content-area {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            padding: 0 20px;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Monologue box */
+        .monologue-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(5px);
+            padding: 30px;
+            border-radius: 16px;
+            max-width: 600px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .monologue-text {
+            font-family: Georgia, serif;
+            font-style: italic;
+            font-size: 20px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        /* Choices */
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .choice-button {
+            background-color: #e2e8f0;
+            color: #2d3748;
+            border: none;
+            padding: 14px 18px;
+            border-radius: 12px;
+            text-align: left;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 18px;
+        }
+
+        .choice-button:hover {
+            background-color: #cbd5e0;
+        }
+
+        /* Phone device styling */
+        .message-interface {
+            background-color: #1E2428;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            height: 700px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            display: none;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .message-header {
+            background-color: #1E2428;
+            padding: 16px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #E9EDEF;
+            border-bottom: 1px solid #2D383E;
+        }
+
+        .message-contact {
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 12px;
+            background-color: #0E141A;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .contact-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            font-size: 20px;
+            color: #E9EDEF;
+        }
+
+        .contact-status {
+            font-size: 14px;
+            color: #8696A0;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-icon {
+            color: #8696A0;
+            cursor: pointer;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #8696A0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-button:hover {
+            color: #E9EDEF;
+        }
+
+        .message-content {
+    padding: 15px;
+    height: 540px;
+    background-color: #0B141A;
+    background-image: url('data:image/png;base64,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');
+    background-repeat: repeat;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    }
+
+        .message-bubble {
+            padding: 10px 14px;
+            border-radius: 10px;
+            max-width: 75%;
+            position: relative;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .message-bubble.received {
+            background-color: #1F2C34;
+            color: #E9EDEF;
+            align-self: flex-start;
+            border-top-left-radius: 0;
+        }
+
+        .message-bubble.sent {
+            background-color: #005C4B;
+            color: #E9EDEF;
+            align-self: flex-end;
+            border-top-right-radius: 0;
+        }
+
+        .timestamp {
+            font-size: 12px;
+            color: #8696A0;
+            margin-top: 4px;
+            display: block;
+            text-align: right;
+        }
+
+        .input-icons {
+            display: flex;
+            gap: 16px;
+            margin-right: 10px;
+        }
+
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            background-color: #1F2C34;
+            width: fit-content;
+            margin-bottom: 10px;
+            align-self: flex-start;
+        }
+
+        .typing-dot {
+            width: 7px;
+            height: 7px;
+            background-color: #8696A0;
+            border-radius: 50%;
+            animation: typing-animation 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing-animation {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* Message date */
+        .message-date {
+            text-align: center;
+            color: #8696A0;
+            font-size: 12px;
+            margin: 10px 0;
+            background-color: rgba(11, 20, 26, 0.5);
+            padding: 5px 12px;
+            border-radius: 8px;
+            align-self: center;
+        }
+
+        .message-choices {
+            padding: 10px;
+            background-color: #1E2428;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .message-choice {
+            background-color: #2A3942;
+            color: #E9EDEF;
+            border: none;
+            padding: 12px 14px;
+            border-radius: 8px;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 16px;
+        }
+
+        .message-choice:hover {
+            background-color: #374248;
+        }
+
+        /* Message input field */
+        .message-input-area {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background-color: #1E2428;
+            position: relative;
+        }
+
+        .message-input {
+            flex: 1;
+            background-color: #2A3942;
+            border: none;
+            border-radius: 20px;
+            padding: 12px 15px;
+            color: #E9EDEF;
+            font-size: 16px;
+        }
+
+        .message-input::placeholder {
+            color: #8696A0;
+        }
+
+        .send-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #00A884;
+            border: none;
+            margin-left: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .send-button svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        /* Utility classes */
+        .hidden {
+            display: none;
+        }
+
+        .visible {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Dark overlay -->
+        <div class="overlay"></div>
+
+        <!-- Game title -->
+        <h1 class="game-title">Last Thursday's Reality</h1>
+
+        <!-- Navigation buttons -->
+        <div class="nav-buttons">
+            <button id="monologueBtn" class="nav-button active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20a2.5 2.5 0 0 1 2.5 2.5v15a2.5 2.5 0 0 1-2.5 2.5H6.5a2.5 2.5 0 0 1-2.5-2.5z"></path>
+                    <path d="M8 7h8"></path>
+                    <path d="M8 11h8"></path>
+                    <path d="M8 15h5"></path>
+                </svg>
+            </button>
+            <button id="messageBtn" class="nav-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Monologue box -->
+            <div id="monologueBox" class="monologue-box">
+                <p id="monologueText" class="monologue-text">
+                    The morning light floods through the windows, casting long shadows across the room. Something feels... different today. My head is foggy, but there's a sense of déjà vu I can't shake.
+                </p>
+                <div id="choices" class="choices">
+                    <button class="choice-button" data-next-step="1">
+                        Get out of bed
+                    </button>
+                </div>
+            </div>
+
+            <!-- Message interface (phone) -->
+            <div id="messageInterface" class="message-interface">
+                <div class="message-header">
+                    <div class="message-contact">
+                        <div class="contact-avatar">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#8696A0">
+                                <path d="M12 2c6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+                            </svg>
+                        </div>
+                        <div class="contact-info">
+                            <div id="messageSender" class="message-sender">ECHO</div>
+                            <div class="contact-status">online</div>
+                        </div>
+                    </div>
+                    <div class="header-actions">
+                        <div class="header-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 1A9 9 0 0 1 23 8.94m-1 7.98v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <button id="closeMessages" class="close-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div id="messageContent" class="message-content">
+                    <!-- Messages will be added here dynamically -->
+                    <div class="message-date">Today</div>
+                </div>
+
+                <div id="messageChoices" class="message-choices">
+                    <!-- Message choices will be added here dynamically -->
+                </div>
+
+                <div class="message-input-area">
+                    <div class="input-icons">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#8696A0">
+                            <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-1.834 9.686l-4.166.575 3.032 2.914-.74 4.139 3.708-2.005 3.708 2.005-.74-4.139 3.032-2.914-4.166-.575-1.834-3.784-1.834 3.784z"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#8696A0">
+                            <path d="M12 2c5.514 0 10 4.486 10 10s-4.486 10-10 10-10-4.486-10-10 4.486-10 10-10zm0-2c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12zm-3.5 8c.828 0 1.5.671 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.671-1.5-1.5.672-1.5 1.5-1.5zm7 0c.828 0 1.5.671 1.5 1.5s-.672 1.5-1.5 1.5-1.5-.671-1.5-1.5.672-1.5 1.5-1.5zm-3.5 2c-.415 0-.75.336-.75.75v5.5c0 .414.335.75.75.75s.75-.336.75-.75v-5.5c0-.414-.335-.75-.75-.75z"/>
+                        </svg>
+                    </div>
+                    <input type="text" class="message-input" placeholder="Type a message" disabled>
+                    <button class="send-button" disabled>
+                        <svg path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.9702544,11.6889879 C22.8132856,11.0605983 22.3423792,10.4322088 21.714504,10.118014 L4.13399899,1.16346272 C3.34915502,0.9 2.40734225,1.00636533 1.77946707,1.4776575 C0.994623095,2.10604706 0.8376543,3.0486314 1.15159189,3.99121575 L3.03521743,10.4322088 C3.03521743,10.5893061 3.34915502,10.7464035 3.50612381,10.7464035 L16.6915026,11.5318905 C16.6915026,11.5318905 17.1624089,11.5318905 17.1624089,12.0031827 C17.1624089,12.4744748 16.6915026,12.4744748 16.6915026,12.4744748 Z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Game state
+            let currentStep = 0;
+            let activeView = 'monologue';
+            let messages = [];
+            let hasNewMessage = false;
+
+            // Get DOM elements
+            const monologueBtn = document.getElementById('monologueBtn');
+            const messageBtn = document.getElementById('messageBtn');
+            const monologueBox = document.getElementById('monologueBox');
+            const messageInterface = document.getElementById('messageInterface');
+            const monologueText = document.getElementById('monologueText');
+            const choicesContainer = document.getElementById('choices');
+            const messageContent = document.getElementById('messageContent');
+            const messageChoices = document.getElementById('messageChoices');
+            const messageSender = document.getElementById('messageSender');
+            const closeMessages = document.getElementById('closeMessages');
+
+
+
+            // Game content
+            const gameContent = [
+                {
+                    monologue: "The morning light floods through the windows, casting long shadows across the room. Something feels... different today. My head is foggy, but there's a sense of déjà vu I can't shake.",
+                    choices: [
+                        { text: "Get out of bed", nextStep: 1 }
+                    ],
+                    messageEvent: null
+                },
+                {
+                    monologue: "I reach for my phone. The date reads Thursday. But wasn't yesterday... Thursday? I could swear it was. The coffee mug isn't where I left it last night. At least, I think I left it by the bed.",
+                    choices: [
+                        { text: "Check the calendar", nextStep: 2 },
+                        { text: "Look around the room more carefully", nextStep: 3 }
+                    ],
+                    messageEvent: null
+                },
+                {
+                    monologue: "The calendar app shows today is Thursday. But so was yesterday. That can't be right. My appointments from 'yesterday' are gone, replaced with new ones I don't remember making.",
+                    choices: [
+                        { text: "This is just a glitch", nextStep: 4 },
+                        { text: "Something is very wrong", nextStep: 5 }
+                    ],
+                    messageEvent: null
+                },
+                {
+                    monologue: "The room seems normal, but looking closer, small details are off. Books rearranged. The candle has burned down more than I remember. A notebook open to a page I don't recall writing.",
+                    choices: [
+                        { text: "Look at the notebook", nextStep: 6 },
+                        { text: "Check your phone", nextStep: 4 }
+                    ],
+                    messageEvent: null
+                },
+                {
+                    monologue: "As I'm trying to make sense of things, my phone buzzes with a notification.",
+                    choices: [],
+                    messageEvent: {
+                        sender: "Unknown Number",
+                        content: "You've been here before. Check the coffee mug."
+                    }
+                },
+                {
+                    monologue: "Something is definitely wrong. The world feels slightly out of sync, like I'm remembering a different reality. My phone buzzes.",
+                    choices: [],
+                    messageEvent: {
+                        sender: "Unknown Number",
+                        content: "You've been here before. Check the coffee mug."
+                    }
+                },
+                {
+                    monologue: "The notebook contains entries in my handwriting, but I have no memory of writing them. The last entry simply reads: 'It happened again. Thursday repeats. Check the coffee mug.'",
+                    choices: [
+                        { text: "Check the coffee mug", nextStep: 7 }
+                    ],
+                    messageEvent: null
+                },
+                {
+                    monologue: "I examine the coffee mug. There's a note tucked underneath, in my own handwriting: 'Reality reset. This is not the first Thursday. Echo knows.'",
+                    choices: [
+                        { text: "Reply to the unknown number", nextStep: 8 }
+                    ],
+                    messageEvent: null
+                },
+                {
+                    monologue: "My hands tremble slightly as I type a response to the mysterious message.",
+                    choices: [
+                        { text: "Who is this?", nextStep: 9 },
+                        { text: "Are you Echo?", nextStep: 9 },
+                        { text: "What's happening to me?", nextStep: 9 }
+                    ],
+                    messageEvent: null
+                },
+                {
+                    monologue: "I wait anxiously for a response, staring at the screen. The seconds tick by with excruciating slowness.",
+                    choices: [],
+                    messageEvent: {
+                        sender: "Echo",
+                        content: "I'm what you left behind the last time you tried to understand. We need to talk. The Overlord is watching."
+                    }
+                }
+            ];
+
+            // Function to update game state and UI
+            function updateGame() {
+                const currentContent = gameContent[currentStep];
+
+                // Update monologue
+                monologueText.textContent = currentContent.monologue;
+
+                // Clear previous choices
+                choicesContainer.innerHTML = '';
+                messageChoices.innerHTML = '';
+
+                // Add new choices
+                currentContent.choices.forEach(choice => {
+                    // For monologue view
+                    const choiceBtn = document.createElement('button');
+                    choiceBtn.className = 'choice-button';
+                    choiceBtn.textContent = choice.text;
+                    choiceBtn.addEventListener('click', () => handleChoice(choice));
+                    choicesContainer.appendChild(choiceBtn);
+
+                    // For message view
+                    const msgChoiceBtn = document.createElement('button');
+                    msgChoiceBtn.className = 'message-choice';
+                    msgChoiceBtn.textContent = choice.text;
+                    msgChoiceBtn.addEventListener('click', () => {
+                        // Add player message if in message view
+                        if (activeView === 'message') {
+                            addMessage({
+                                sender: 'Me',
+                                content: choice.text,
+                                isPlayer: true
+                            });
+                        }
+                        handleChoice(choice);
+                    });
+                    messageChoices.appendChild(msgChoiceBtn);
+                });
+
+                // Process message event if present
+                if (currentContent.messageEvent) {
+                    addMessage({
+                        sender: currentContent.messageEvent.sender,
+                        content: currentContent.messageEvent.content,
+                        isPlayer: false
+                    });
+
+                    // Notify if not currently in message view
+                    if (activeView !== 'message') {
+                        hasNewMessage = true;
+                        messageBtn.classList.add('notify', 'pulse');
+                    }
+                }
+
+                // Update message sender name
+                updateMessageSender();
+            }
+
+            // Function to handle player choice
+            function handleChoice(choice) {
+                currentStep = choice.nextStep;
+                updateGame();
+            }
+
+            // Function to add a message
+            function addMessage(message) {
+                // Add timestamp
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                message.timestamp = timeStr;
+
+                // Add to messages array
+                messages.push(message);
+
+                // Show typing indicator first for non-player messages
+                if (!message.isPlayer) {
+                    showTypingIndicator().then(() => {
+                        // After typing animation, add the actual message
+                        addMessageElement(message);
+                    });
+                } else {
+                    // For player messages, add immediately
+                    addMessageElement(message);
+                }
+            }
+
+            // Function to show typing indicator
+            function showTypingIndicator() {
+                return new Promise(resolve => {
+                    // Create typing indicator
+                    const typingIndicator = document.createElement('div');
+                    typingIndicator.className = 'typing-indicator';
+
+                    // Add dots
+                    for (let i = 0; i < 3; i++) {
+                        const dot = document.createElement('div');
+                        dot.className = 'typing-dot';
+                        typingIndicator.appendChild(dot);
+                    }
+
+                    messageContent.appendChild(typingIndicator);
+                    messageContent.scrollTop = messageContent.scrollHeight;
+
+                    // Remove after typing delay (random between 1-3 seconds)
+                    const typingDelay = 1000 + Math.random() * 2000;
+                    setTimeout(() => {
+                        typingIndicator.remove();
+                        resolve();
+                    }, typingDelay);
+                });
+            }
+
+            // Function to add message element to the UI
+            function addMessageElement(message) {
+                const msgElement = document.createElement('div');
+                msgElement.className = `message-bubble ${message.isPlayer ? 'sent' : 'received'}`;
+
+                const msgText = document.createElement('div');
+                msgText.textContent = message.content;
+                msgElement.appendChild(msgText);
+
+                const timestamp = document.createElement('span');
+                timestamp.className = 'timestamp';
+                timestamp.textContent = message.timestamp;
+                msgElement.appendChild(timestamp);
+
+                messageContent.appendChild(msgElement);
+
+                // Scroll to the bottom of the message content
+                messageContent.scrollTop = messageContent.scrollHeight;
+            }
+
+            // Function to update message sender display
+            function updateMessageSender() {
+                const nonPlayerMessages = messages.filter(msg => !msg.isPlayer);
+                if (nonPlayerMessages.length > 0) {
+                    const sender = nonPlayerMessages[nonPlayerMessages.length - 1].sender;
+                    messageSender.textContent = sender.toUpperCase();
+
+                    // Update contact status
+                    const statusElem = document.querySelector('.contact-status');
+                    if (statusElem) {
+                        if (sender === "Echo") {
+                            statusElem.textContent = "online";
+                        } else if (sender === "Unknown Number") {
+                            statusElem.textContent = "last seen recently";
+                        } else {
+                            statusElem.textContent = "typing...";
+                        }
+                    }
+                } else {
+                    messageSender.textContent = 'ECHO';
+                }
+            }
+
+             // Function to switch to Monologue View
+            function showMonologueView() {
+                monologueBox.style.display = 'block';
+                messageInterface.style.display = 'none';
+                activeView = 'monologue';
+                monologueBtn.classList.add('active');
+                messageBtn.classList.remove('active');
+            }
+
+            // Function to switch to Message View
+            function showMessageView() {
+                monologueBox.style.display = 'none';
+                messageInterface.style.display = 'block';
+                activeView = 'message';
+                monologueBtn.classList.remove('active');
+                messageBtn.classList.add('active');
+                hasNewMessage = false;
+                messageBtn.classList.remove('notify', 'pulse');
+            }
+
+
+            // Initialize the game
+            updateGame();
+            showMonologueView(); // Start in monologue view
+
+            // Button Event Listeners (Outside window.onload - Cleaner)
+            messageBtn.addEventListener('click', showMessageView);
+            monologueBtn.addEventListener('click', showMonologueView);
+            closeMessages.addEventListener('click', showMonologueView);
+
+        });
+    </script>
+</body>
+</html>
