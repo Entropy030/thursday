@@ -14,9 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('Starting new game session');
   }
   
-  // Initialize Anomaly Log system
-  ui.initAnomalyLog();
-  
   // Add debug controls in development
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     addDebugControls(ui);
@@ -63,7 +60,6 @@ function addDebugControls(ui) {
         <div class="settings-buttons">
           <button id="resetGameBtn">Reset Game</button>
           <button id="logStateBtn">Log State</button>
-          <button id="addTestAnomalyBtn">Add Test Anomaly</button>
         </div>
       </div>
       <div class="settings-section">
@@ -98,11 +94,6 @@ function addDebugControls(ui) {
   
   document.getElementById('logStateBtn').addEventListener('click', () => {
     console.log('Current game state:', ui.engine.state);
-  });
-  
-  document.getElementById('addTestAnomalyBtn').addEventListener('click', () => {
-    ui.engine.logAnomaly('date_repeat');
-    ui.updateAnomalyLog();
   });
   
   console.log('Debug controls enabled');

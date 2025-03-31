@@ -196,8 +196,6 @@ html, body {
 
 /* ===== MONOLOGUE VIEW ===== */
 
-/* ===== MONOLOGUE VIEW ===== */
-
 .monologue-box {
   background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(4px);
@@ -267,8 +265,6 @@ html, body {
 .choice-button:active {
   transform: translateY(0);
 }
-
-/* ===== MESSAGE INTERFACE ===== */
 
 /* ===== MESSAGE INTERFACE ===== */
 
@@ -516,7 +512,7 @@ html, body {
   padding: 0.9375rem;
   height: calc(100% - 4.375rem - 7.5rem);
   background-color: #0B141A;
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFx0lEQVR4nO2aW4hVVRjHf3PU0UbHvOXlYZwxs0yzGU2jC5lZGV0eKrNCu1Ah9VAPEdRTPURElkQXogeLIKnooTLCnuohKsXUIMyySGvQ0NHR0VFrHVfOf9hn9tln73P2OWe2h/OHxZm91re+y/9b37fWgcgcGMIABOsbVwMqM300O6jYV0h3YKTzvcdRF0V3AQsBpYDvwO1Dv1IEPckl0UeBb4Ahwqkzn7+cS2AJM7RTRocDzwG/AsznEbwNGAO8o8FXtJDkwBHgE');
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFx0lEQVR4nO2aW4hVVRjHf3PU0UbHvOXlYZwxs0yzGU2jC5lZGV0eKrNCu1Ah9VAPEdRTPURElkQXogeLIKnooTLCnuohKsXUIMyySGvQ0NHR0VFrHVfOf9hn9tln73P2OWe2h/OHxZm91re+y/9b37fWgcgcGMIABOsbVwMqM300O6jYV0h3YKTzvcdRF0V3AQsBpYDvwO1Dv1IEPckl0UeBb4Ahwqkzn7+cS2AJM7RTRocDzwG/AsznEbwNGAO8o8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FX');
   background-repeat: repeat;
   overflow-y: auto;
   display: flex;
@@ -668,94 +664,6 @@ html, body {
 .send-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-}
-
-/* ===== ANOMALY LOG ===== */
-
-.anomaly-log {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 25rem;
-  max-height: 80vh;
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(8px);
-  border-radius: var(--radius-lg);
-  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
-  z-index: 200;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.anomaly-log-header {
-  padding: 1rem;
-  background-color: var(--primary-dark);
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.anomaly-log-header h2 {
-  font-size: 1.25rem;
-  margin: 0;
-}
-
-.anomaly-log-content {
-  padding: 1rem;
-  overflow-y: auto;
-  max-height: 70vh;
-}
-
-.empty-log {
-  color: var(--subtle-light);
-  text-align: center;
-  padding: 2rem 0;
-}
-
-.anomaly-entry {
-  padding: 0.75rem;
-  border-radius: var(--radius-md);
-  background-color: #f8f9fa;
-  margin-bottom: 0.75rem;
-  border-left: 0.25rem solid var(--subtle-dark);
-}
-
-.anomaly-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.anomaly-header h3 {
-  font-size: 1.1rem;
-  margin: 0;
-}
-
-.anomaly-impact {
-  font-size: 0.875rem;
-}
-
-.anomaly-impact.impact-1 { color: #4a5568; }
-.anomaly-impact.impact-2 { color: #4299e1; }
-.anomaly-impact.impact-3 { color: #805ad5; }
-.anomaly-impact.impact-4 { color: #ed8936; }
-.anomaly-impact.impact-5 { color: #e53e3e; }
-
-.anomaly-description {
-  font-size: 0.9375rem;
-  margin-bottom: 0.5rem;
-}
-
-.anomaly-timestamp {
-  display: block;
-  font-size: 0.75rem;
-  color: var(--subtle-light);
-  text-align: right;
 }
 
 /* ===== PUZZLE INTERFACE ===== */
@@ -1050,16 +958,16 @@ html, body {
     font-size: 0.875rem;
     max-width: 24rem; /* Prevent excessive width */
   }
-  
+
   /* Message interface adjustments */
   .message-interface {
     max-height: 80vh;
     height: auto;
     width: 26rem;
   }
-  
-  /* Anomaly log enhancements */
-  .anomaly-log {
+
+  /* Keyword modal enhancements */
+  .keyword-modal-content {
     max-width: 30rem;
   }
 }

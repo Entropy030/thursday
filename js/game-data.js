@@ -21,7 +21,6 @@ const gameData = {
     activeView: "monologue",             // Current view (monologue or message)
     
     // Player knowledge and collections
-    anomalyLog: [],                      // Tracked anomalies/inconsistencies
     knownKeywords: [],                   // Keywords the player has examined
     receivedEchoes: [],                  // Echo messages received
     
@@ -69,21 +68,6 @@ const gameData = {
       unlockedNodes: ["keyword_iris"]
     }
     // Additional keywords...
-  },
-  
-  // Anomalies that can be logged
-  anomalies: {
-    "date_repeat": {
-      title: "Repeating Date",
-      description: "The calendar shows Thursday, October 26th again.",
-      impact: 2 // Scale 1-5 of how significant this anomaly is
-    },
-    "coffee_mug": {
-      title: "Missing Coffee Mug",
-      description: "Can't remember where I put it last night.",
-      impact: 1
-    }
-    // Additional anomalies...
   },
   
   // Puzzles in the game
@@ -150,7 +134,6 @@ const gameData = {
       type: "monologue",
       content: "My hand hovers over the coffee maker. Routine grounds me, usually. But where *is* that mug? Wasn't it by the bed last night? \n\nI glance at my phone resting on the counter. The screen glows faintly. The date reads Thursday, October 26th.\n\n<span class='internal-thought'>Again?</span> I could swear yesterday was Thursday too. The 26th.",
       environment: "kitchen",
-      availableAnomalies: ["date_repeat", "coffee_mug"],
       choices: [
         {
           text: "Check the calendar app.",

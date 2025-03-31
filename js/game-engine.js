@@ -17,7 +17,6 @@ class GameEngine {
       'nodeChanged': [],
       'viewChanged': [],
       'echoReceived': [],
-      'anomalyLogged': [],
       'puzzleSolved': []
     };
   }
@@ -160,31 +159,6 @@ class GameEngine {
     });
     
     this.triggerEvent('stateChanged', { effects });
-  }
-  
-  /**
-   * Add an anomaly to the log
-   * @param {string} anomalyId - ID of the anomaly to log
-   */
-  logAnomaly(anomalyId) {
-    const anomaly = gameData.anomalies[anomalyId];
-    if (!anomaly) return false;
-    
-    if (!this.state.anomalyLog.some(a => a.id === anomalyId)) {
-      this.state.anomalyLog.push({
-        id: anomalyId,
-        title: anomaly.title,
-        description: anomaly.description,
-        impact: anomaly.impact,
-        timestamp: new Date().toISOString()
-      });
-      
-      this.saveState();
-      this.triggerEvent('anomalyLogged', { anomalyId });
-      return true;
-    }
-    
-    return false;
   }
   
   /**

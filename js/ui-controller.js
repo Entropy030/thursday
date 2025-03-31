@@ -97,11 +97,6 @@ class UIController {
         this.elements.messageBtn.classList.add('notify', 'pulse');
       }
     });
-    
-    this.engine.addEventListener('anomalyLogged', () => {
-      // Could add visual indicator or sound
-      console.log('Anomaly logged');
-    });
   }
   
   /**
@@ -169,13 +164,6 @@ class UIController {
     
     // Set text with animation
     this.textSystem.setText(node.content, textSystemChoices);
-    
-    // Check for available anomalies to log
-    if (node.availableAnomalies && node.availableAnomalies.length > 0) {
-      // Here we could highlight elements or add clickable areas
-      // For now, we'll just log to console
-      console.log('Available anomalies:', node.availableAnomalies);
-    }
   }
   
   /**
@@ -500,132 +488,6 @@ class UIController {
         this.engine.makeChoice(choice);
       });
       container.appendChild(choiceBtn);
-    });
-  }
-  
-  /**
-   * Initialize Anomaly Log system
-   * Creates UI for tracking anomalies
-   */
-  initAnomalyLog() {
-    // Create anomaly log button
-    const anomalyBtn = document.createElement('button');
-    anomalyBtn.id = 'anomalyBtn';
-    anomalyBtn.className = 'nav-button';
-    anomalyBtn.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-        <line x1="12" y1="9" x2="12" y2="13"></line>
-        <line x1="12" y1="17" x2="12.01" y2="17"></line>
-      </svg>
-    `;
-    
-    // Add to nav buttons
-    const navButtons = document.querySelector('.nav-buttons');
-    navButtons.appendChild(anomalyBtn);
-    
-    // Create anomaly log modal
-    const anomalyLog = document.createElement('div');
-    anomalyLog.id = 'anomalyLog';
-    anomalyLog.className = 'anomaly-log hidden';
-    anomalyLog.innerHTML = `
-      <div class="anomaly-log-header">
-        <h2>Anomaly Log</h2>
-        <button id="closeAnomalyLog" class="close-button">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-      </div>
-      <div class="anomaly-log-content">
-        <p class="empty-log">No anomalies recorded yet.</p>
-      </div>
-    `;
-    
-    // Add to game container
-    this.elements.gameContainer.appendChild(anomalyLog);
-    
-    // Store elements reference
-    this.elements.anomalyBtn = anomalyBtn;
-    this.elements.anomalyLog = anomalyLog;
-    this.elements.anomalyLogContent = anomalyLog.querySelector('.anomaly-log-content');
-    this.elements.closeAnomalyLog = document.getElementById('closeAnomalyLog');
-    
-    // Add event listeners
-    anomalyBtn.addEventListener('click', () => this.toggleAnomalyLog());
-    this.elements.closeAnomalyLog.addEventListener('click', () => this.toggleAnomalyLog(false));
-    
-    // Update with any existing anomalies
-    this.updateAnomalyLog();
-  }
-  
-  /**
-   * Toggle anomaly log visibility
-   * @param {boolean} show - Force show/hide (optional)
-   */
-  toggleAnomalyLog(show) {
-    const anomalyLog = this.elements.anomalyLog;
-    const isVisible = !anomalyLog.classList.contains('hidden');
-    
-    if (show === undefined) {
-      // Toggle
-      if (isVisible) {
-        anomalyLog.classList.add('hidden');
-        this.elements.anomalyBtn.classList.remove('active');
-      } else {
-        anomalyLog.classList.remove('hidden');
-        this.elements.anomalyBtn.classList.add('active');
-        this.updateAnomalyLog(); // Refresh content
-      }
-    } else if (show) {
-      // Force show
-      anomalyLog.classList.remove('hidden');
-      this.elements.anomalyBtn.classList.add('active');
-      this.updateAnomalyLog(); // Refresh content
-    } else {
-      // Force hide
-      anomalyLog.classList.add('hidden');
-      this.elements.anomalyBtn.classList.remove('active');
-    }
-  }
-  
-  /**
-   * Update anomaly log content
-   */
-  updateAnomalyLog() {
-    const content = this.elements.anomalyLogContent;
-    const anomalies = this.engine.state.anomalyLog;
-    
-    // Clear current content
-    content.innerHTML = '';
-    
-    if (anomalies.length === 0) {
-      const emptyMessage = document.createElement('p');
-      emptyMessage.className = 'empty-log';
-      emptyMessage.textContent = 'No anomalies recorded yet.';
-      content.appendChild(emptyMessage);
-      return;
-    }
-    
-    // Add each anomaly
-    anomalies.forEach(anomaly => {
-      const entry = document.createElement('div');
-      entry.className = 'anomaly-entry';
-      
-      // Create impact indicator (1-5 scale)
-      const impactStars = '★'.repeat(anomaly.impact) + '☆'.repeat(5 - anomaly.impact);
-      
-      entry.innerHTML = `
-        <div class="anomaly-header">
-          <h3>${anomaly.title}</h3>
-          <span class="anomaly-impact impact-${anomaly.impact}">${impactStars}</span>
-        </div>
-        <p class="anomaly-description">${anomaly.description}</p>
-        <span class="anomaly-timestamp">${new Date(anomaly.timestamp).toLocaleString()}</span>
-      `;
-      
-      content.appendChild(entry);
     });
   }
 }
