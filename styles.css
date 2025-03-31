@@ -500,11 +500,11 @@
 /* ===== TEXT ANIMATION SYSTEM ===== */
 .continue-indicator {
   position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 1.25rem;
-  animation: bounce 1s infinite;
+  bottom: 0.75rem;
+  right: 0.75rem;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 1rem;
+  animation: bounce 1.2s infinite;
   user-select: none;
   pointer-events: none;
 }
@@ -838,31 +838,29 @@ html, body {
 /* ===== MONOLOGUE VIEW ===== */
 
 .monologue-box {
-  background-color: rgba(255, 255, 255, 0.92);
+  background-color: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(4px);
-  padding: 1.25rem;
-  border-radius: 1.25rem;
-  width: 92%;
-  max-width: 24rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  width: 85%;
+  max-width: 20rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
   transition: all 0.3s ease;
-  max-height: 50vh; /* Even smaller height */
-  overflow-y: auto;
-  margin-bottom: 4.5rem; /* Space for navigation */
+  max-height: none; /* Remove max-height to prevent scrolling */
+  overflow-y: visible; /* Remove scrolling */
+  margin-bottom: 5.5rem; /* Space for navigation */
   /* Position further down to allow background to be visible */
   align-self: flex-end;
-  margin-bottom: 5.5rem; /* Extra space for nav */
-  
   /* Ghibli-inspired styling */
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .monologue-text {
   font-family: var(--serif-font);
-  font-size: 1.05rem;
-  line-height: 1.65;
+  font-size: 1rem;
+  line-height: 1.5;
   color: #2d2d2d;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
   white-space: pre-wrap;
   letter-spacing: 0.01rem;
 }
@@ -871,7 +869,7 @@ html, body {
   font-style: italic;
   color: #4a5568;
   display: block;
-  margin: 0.75rem 0;
+  margin: 0.5rem 0;
 }
 
 /* Choices */
