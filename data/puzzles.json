@@ -1,0 +1,12 @@
+{
+    "chenCipher": {
+      "title_key": "pz_chen_title",
+      "description_key": "pz_chen_desc",
+      "difficulty": 2,
+      "requiredClues": ["cipher_key", "message_fragment"],
+      "solution": "DAWNBREAKER",
+      "reward": {
+        "unlocksNodeId": "puzzle_solved_chen_cipher"
+      }
+    }
+  }

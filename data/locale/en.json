@@ -1,0 +1,36 @@
+{
+    "env_bedroom_name": "Bedroom",
+    "env_bedroom_desc": "Your comfortable bedroom, familiar yet somehow unsettling.",
+    "env_kitchen_name": "Kitchen",
+    "env_kitchen_desc": "The small kitchen where you prepare your meals. Smells faintly of stale coffee.",
+  
+    "kw_loop_title": "The Loop",
+    "kw_loop_desc": "A repeating cycle. Like a broken record skipping on the turntable of reality. Or maybe just a bad case of déjà vu.",
+    "kw_iris_title": "IRIS",
+    "kw_iris_desc": "Integrated Restoration Intelligence System. Dr. Chen's masterpiece AI, designed to reboot Earth after the Scourge. Supposedly benign. Supposedly.",
+  
+    "pz_chen_title": "Chen Cipher",
+    "pz_chen_desc": "A complex decryption method developed by Dr. Sophia Chen. Rumored to be unbreakable without the right key... or the right insight.",
+  
+    "node_intro_awakening_content": "Consciousness slams back in like a poorly timed jump scare. Morning.\n\nThe weak sunlight cuts through the blinds, striping the opposite wall in bars of grey and pale gold. Dust motes perform a lazy ballet in the beams...\n\n<span class='internal-thought'>And yet... something feels fundamentally *wrong*.</span>\n\nIt's not a noise, not a smell. Just a cold prickle down the spine, a glitch in the matrix feeling. My thoughts are wading through mud. A thread of déjà vu, sharp as a needle, insists this exact sequence... just happened.",
+    "node_intro_awakening_choice1_text": "Sit up. Scan the room like a paranoid meerkat.",
+  
+    "node_intro_rationalization_content": "<span class='internal-thought'>Did time just... stutter? Rebuffer?</span>\n\nNo. That's insane. Must be sleep fog. Or maybe I dreamt the last two minutes. Yeah, that's it. Totally plausible.\n\nI heave myself out of bed, stretching. The room snaps into focus: worn armchair, cluttered desk, clothes draped haphazardly... exactly as they should be. <span class='internal-thought'>Except... did I *actually* drop them there last night?</span> The memory feels thin, like a badly photoshopped image.",
+    "node_intro_rationalization_choice1_text": "Dismiss it. Just another perfectly normal Thursday. Again.",
+    "node_intro_rationalization_choice2_text": "Coffee. Need coffee. Logic can wait.",
+  
+    "node_intro_heading_kitchen_content": "Padding into the kitchen. The linoleum is cold underfoot, the silence oppressive.\n\nEverything appears normal. Perfectly, eerily normal. Too normal.\n\n<span class='internal-thought'>The air feels thick, charged. Like the moment before a storm breaks, or before the static shock you *know* is coming.</span>",
+    "node_intro_heading_kitchen_choice1_text": "Make coffee. Routine is the anchor in the storm of weirdness.",
+  
+    "node_anomaly_date_mug_content": "Muscle memory guides my hand towards the coffee maker. Ritual grounds me.\n\nBut wait – where’s my favorite chipped mug? The blue one? Wasn't it on the nightstand?\n\nMy phone lies face up on the counter, screen dimly lit. Thursday, October 26th.\n\n<span class='internal-thought'>Again? Seriously?</span>\n\nOkay, denial isn't working. Yesterday was *definitely* Thursday, October 26th. I'd bet my dwindling sanity on it.",
+    "node_anomaly_date_mug_choice1_text": "Check the calendar app. Maybe the phone's just trolling me.",
+    "node_anomaly_date_mug_choice2_text": "Forget the date. Find the damn mug. Priorities.",
+  
+    "node_first_echo_message_content": "The loop tightens. Check the coffee mug. It remembers.",
+    "node_first_echo_message_choice1_text": "Okay..." // Text for the choice after receiving the message
+  
+    // --- Add text for all other keys from nodes, keywords, etc. ---
+    // "node_prepare_reply_content": "...",
+    // "node_prepare_reply_choice1_text": "Who are you?",
+    // ... etc ...
+  }

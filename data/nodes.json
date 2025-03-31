@@ -1,0 +1,75 @@
+{
+    "intro_awakening": {
+      "type": "monologue",
+      "content_key": "node_intro_awakening_content",
+      "environment": "bedroom",
+      "choices": [
+        {
+          "text_key": "node_intro_awakening_choice1_text",
+          "nextNodeId": "intro_rationalization"
+        }
+      ]
+    },
+    "intro_rationalization": {
+      "type": "monologue",
+      "content_key": "node_intro_rationalization_content",
+      "environment": "bedroom",
+      "choices": [
+        {
+          "text_key": "node_intro_rationalization_choice1_text",
+          "nextNodeId": "intro_heading_kitchen",
+          "effects": { "selfDoubt": -1 }
+        },
+        {
+          "text_key": "node_intro_rationalization_choice2_text",
+          "nextNodeId": "intro_heading_kitchen"
+        }
+      ]
+    },
+    "intro_heading_kitchen": {
+      "type": "monologue",
+      "content_key": "node_intro_heading_kitchen_content",
+      "environment": "kitchen",
+      "choices": [
+        {
+          "text_key": "node_intro_heading_kitchen_choice1_text",
+          "nextNodeId": "anomaly_date_mug"
+        }
+      ]
+    },
+    "anomaly_date_mug": {
+      "type": "monologue",
+      "content_key": "node_anomaly_date_mug_content",
+      "environment": "kitchen",
+      "choices": [
+        {
+          "text_key": "node_anomaly_date_mug_choice1_text",
+          "nextNodeId": "first_echo_message"
+          // Note: Changed nextNodeId here to trigger message based on original data logic
+        },
+        {
+          "text_key": "node_anomaly_date_mug_choice2_text",
+          "nextNodeId": "first_echo_message"
+          // Note: Changed nextNodeId here as well
+        }
+      ]
+    },
+    "first_echo_message": {
+      "type": "messageReceived",
+      "sender": "Unknown Number", // Or perhaps use a key if sender names need localization? For now, direct.
+      "content_key": "node_first_echo_message_content",
+      "choices": [
+        {
+          "text_key": "node_first_echo_message_choice1_text", // Maybe not needed if message auto-progresses? Depends on engine.
+          "nextNodeId": "prepare_reply" // Assuming this node exists/will be added
+        }
+      ]
+    }
+    // --- Add definitions for other nodes like "prepare_reply", "puzzle_solved_chen_cipher", etc. ---
+    // "prepare_reply": { ... },
+    // "wait_reply_echo": { ... },
+    // "keyword_loop_node": { ... },
+    // "keyword_iris_node": { ... },
+    // "puzzle_solved_chen_cipher": { ... },
+    // "puzzle_failed_chen_cipher": { ... }
+  }

@@ -1,0 +1,14 @@
+{
+    "bedroom": {
+      "name_key": "env_bedroom_name",
+      "description_key": "env_bedroom_desc",
+      "backgroundImage": "images/bedroom.jpg",
+      "objects": ["bed", "desk", "window", "closet", "phone"]
+    },
+    "kitchen": {
+      "name_key": "env_kitchen_name",
+      "description_key": "env_kitchen_desc",
+      "backgroundImage": "images/kitchen.jpg",
+      "objects": ["coffee_maker", "refrigerator", "table", "sink", "counter"]
+    }
+  }

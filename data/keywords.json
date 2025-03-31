@@ -1,0 +1,12 @@
+{
+    "loop": {
+      "title_key": "kw_loop_title",
+      "description_key": "kw_loop_desc",
+      "unlockedNodes": ["keyword_loop_node"]
+    },
+    "IRIS": {
+      "title_key": "kw_iris_title",
+      "description_key": "kw_iris_desc",
+      "unlockedNodes": ["keyword_iris_node"]
+    }
+  }
