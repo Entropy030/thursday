@@ -1,244 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Updated Title to match GDD -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Echoes</title>
-    <style>
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body, html {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        /* Game container */
-        .game-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-           
-            background-image: url('images/bedroom.jpg');
-            background-size: cover;
-            background-position: center;
-            
-        }
-
-        /* Dark overlay */
-        .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.3); /* Slightly lighter overlay */
-        }
-
-        /* Game title */
-        .game-title {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            font-size: 24px;
-            font-family: Georgia, serif; /* Title font */
-            z-index: 10;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
-        }
-
-        /* Navigation buttons */
-        .nav-buttons {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
-            z-index: 100;
-        }
-
-        .nav-button {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .nav-button.active {
-            background-color: white;
-            color: black;
-        }
-
-        .nav-button:not(.active) {
-            background-color: rgba(50, 50, 50, 0.8);
-            color: white;
-        }
-
-        .nav-button:hover {
-            transform: scale(1.05);
-        }
-
-        .nav-button.notify {
-            position: relative;
-        }
-
-        .nav-button.notify::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 12px;
-            height: 12px;
-            background-color: #e53e3e; /* Red */
-            border-radius: 50%;
-            border: 1px solid white;
-        }
-
-        .nav-button.pulse {
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
-            }
-        }
-
-        /* Content area */
-        .content-area {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            top: 0; /* Allow content to center vertically */
-            padding: 20px 20px 80px 20px; /* Added bottom padding */
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center; /* Center content vertically and horizontally */
-        }
-
-        /* Monologue box */
-        .monologue-box {
-            background-color: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(5px);
-            padding: 30px;
-            border-radius: 16px;
-            max-width: 650px; /* Slightly wider */
-            width: 90%; /* Responsive width */
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-            max-height: 80vh; /* Limit height */
-            overflow-y: auto; /* Allow scrolling if needed */
-        }
-
-        .monologue-text {
-            font-family: Georgia, 'Times New Roman', Times, serif; /* More classic serif */
-            font-style: normal; /* Let italics be used selectively */
-            font-size: 19px; /* Slightly smaller for readability */
-            line-height: 1.7; /* Increased line spacing */
-            color: #2d3748; /* Darker text */
-            margin-bottom: 25px;
-            white-space: pre-wrap; /* Preserve line breaks from content */
-        }
-
-        /* Styling for specific parts of the monologue */
-        .internal-thought {
-            font-style: italic;
-            color: #4a5568; /* Greyer for thoughts */
-        }
-
-        /* Choices */
-        .choices {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        .choice-button {
-            background-color: #e2e8f0; /* Light grey */
-            color: #2d3748; /* Dark grey text */
-            border: 1px solid #cbd5e0; /* Subtle border */
-            padding: 14px 18px;
-            border-radius: 12px;
-            text-align: left;
-            cursor: pointer;
-            transition: background-color 0.2s ease, transform 0.1s ease;
-            font-size: 17px; /* Slightly smaller */
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Consistent UI font */
-        }
-
-        .choice-button:hover {
-            background-color: #cbd5e0; /* Slightly darker grey on hover */
-            transform: translateY(-1px); /* Subtle lift */
-        }
-
-        .choice-button:active {
-            transform: translateY(0px); /* Press down */
-        }
-
-
-        /* Phone device styling - (Keep existing styles) */
-        .message-interface {
-            background-color: #1E2428; border-radius: 16px; width: 100%; max-width: 400px; height: 700px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3); display: none; overflow: hidden; transition: all 0.3s ease; position: relative;
-        }
-        .message-header { background-color: #1E2428; padding: 16px 16px; display: flex; justify-content: space-between; align-items: center; color: #E9EDEF; border-bottom: 1px solid #2D383E;}
-        .message-contact { display: flex; align-items: center; }
-        .contact-avatar { width: 45px; height: 45px; border-radius: 50%; margin-right: 12px; background-color: #0E141A; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .contact-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .contact-info { display: flex; flex-direction: column; }
-        .message-sender { font-weight: bold; font-size: 20px; color: #E9EDEF; }
-        .contact-status { font-size: 14px; color: #8696A0; }
-        .header-actions { display: flex; gap: 20px; }
-        .header-icon { color: #8696A0; cursor: pointer; }
-        .close-button { background: none; border: none; cursor: pointer; font-size: 20px; color: #8696A0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; }
-        .close-button:hover { color: #E9EDEF; }
-        .message-content { padding: 15px; height: 540px; background-color: #0B141A; background-image: url('data:image/png;base64,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'); background-repeat: repeat; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .message-bubble { padding: 10px 14px; border-radius: 10px; max-width: 75%; position: relative; font-size: 16px; line-height: 1.5; }
-        .message-bubble.received { background-color: #1F2C34; color: #E9EDEF; align-self: flex-start; border-top-left-radius: 0; }
-        .message-bubble.sent { background-color: #005C4B; color: #E9EDEF; align-self: flex-end; border-top-right-radius: 0; }
-        .timestamp { font-size: 12px; color: #8696A0; margin-top: 4px; display: block; text-align: right; }
-        .input-icons { display: flex; gap: 16px; margin-right: 10px; }
-        .typing-indicator { display: flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 10px; background-color: #1F2C34; width: fit-content; margin-bottom: 10px; align-self: flex-start; }
-        .typing-dot { width: 7px; height: 7px; background-color: #8696A0; border-radius: 50%; animation: typing-animation 1.4s infinite ease-in-out; }
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing-animation { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
-        .message-date { text-align: center; color: #8696A0; font-size: 12px; margin: 10px 0; background-color: rgba(11, 20, 26, 0.5); padding: 5px 12px; border-radius: 8px; align-self: center; }
-        .message-choices { padding: 10px; background-color: #1E2428; display: flex; flex-direction: column; gap: 8px; }
-        .message-choice { background-color: #2A3942; color: #E9EDEF; border: none; padding: 12px 14px; border-radius: 8px; text-align: left; cursor: pointer; transition: all 0.2s ease; font-size: 16px; }
-        .message-choice:hover { background-color: #374248; }
-        .message-input-area { display: flex; align-items: center; padding: 12px; background-color: #1E2428; position: relative; }
-        .message-input { flex: 1; background-color: #2A3942; border: none; border-radius: 20px; padding: 12px 15px; color: #E9EDEF; font-size: 16px; }
-        .message-input::placeholder { color: #8696A0; }
-        .send-button { width: 40px; height: 40px; border-radius: 50%; background-color: #00A884; border: none; margin-left: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; }
-        .send-button svg { width: 20px; height: 20px; fill: white; }
-
-        /* Utility classes */
-        .hidden { display: none; }
-        .visible { display: block; }
-    </style>
+    <meta name="description" content="Echoes - A philosophical text adventure exploring reality and perception">
+    <meta name="theme-color" content="#1E2428">
+    
+    <!-- Preload key assets -->
+    <link rel="preload" href="images/bedroom.jpg" as="image">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="game-container">
@@ -246,12 +22,11 @@
         <div class="overlay"></div>
 
         <!-- Game title -->
-        <!-- Updated Title -->
         <h1 class="game-title">Echoes</h1>
 
-        <!-- Navigation buttons -->
+        <!-- Navigation buttons (bottom positioned by CSS) -->
         <div class="nav-buttons">
-            <button id="monologueBtn" class="nav-button active">
+            <button id="monologueBtn" class="nav-button active" aria-label="Monologue View">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20a2.5 2.5 0 0 1 2.5 2.5v15a2.5 2.5 0 0 1-2.5 2.5H6.5a2.5 2.5 0 0 1-2.5-2.5z"></path>
                     <path d="M8 7h8"></path>
@@ -259,25 +34,23 @@
                     <path d="M8 15h5"></path>
                 </svg>
             </button>
-            <button id="messageBtn" class="nav-button">
+            <button id="messageBtn" class="nav-button" aria-label="Messages View">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 </svg>
             </button>
-            <!-- Add Log/Inventory button later maybe -->
+            <!-- Anomaly Log button added dynamically by JS -->
         </div>
 
         <!-- Content Area -->
         <div class="content-area">
             <!-- Monologue box -->
             <div id="monologueBox" class="monologue-box">
-                <!-- Monologue text updated dynamically -->
-                <p id="monologueText" class="monologue-text"></p>
-                <!-- Choices updated dynamically -->
+                <p id="monologueText" class="monologue-text">Loading...</p>
                 <div id="choices" class="choices"></div>
             </div>
 
-            <!-- Message interface (phone) -->
+            <!-- Message interface -->
             <div id="messageInterface" class="message-interface">
                 <div class="message-header">
                     <div class="message-contact">
@@ -293,8 +66,7 @@
                         </div>
                     </div>
                     <div class="header-actions">
-                        <!-- Removed call icon for ECHO -->
-                        <button id="closeMessages" class="close-button">
+                        <button id="closeMessages" class="close-button" aria-label="Close Messages">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -314,480 +86,26 @@
 
                 <div class="message-input-area">
                     <!-- Input area is disabled for now, choices are used -->
-                     <input type="text" class="message-input" placeholder="Select a choice above" disabled>
-                     <button class="send-button" disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+                    <input type="text" class="message-input" placeholder="Select a choice above" disabled>
+                    <button class="send-button" disabled aria-label="Send Message">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
+                        </svg>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // --- DEVELOPMENT NOTE ---
-        // Ideally, game content (monologues, choices, messages) should be in a separate JSON file.
-        // Game logic (state management, UI updates) should be in a separate JS file.
-        // Keeping it inline for this prototype stage.
-        // --- END DEV NOTE ---
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Game state
-            let currentStep = 0;
-            let activeView = 'monologue'; // 'monologue' or 'message'
-            let messages = []; // Store message history [{ sender, content, isPlayer, timestamp }]
-            let hasNewMessage = false;
-
-            // Get DOM elements
-            const monologueBtn = document.getElementById('monologueBtn');
-            const messageBtn = document.getElementById('messageBtn');
-            const monologueBox = document.getElementById('monologueBox');
-            const messageInterface = document.getElementById('messageInterface');
-            const monologueText = document.getElementById('monologueText');
-            const choicesContainer = document.getElementById('choices');
-            const messageContent = document.getElementById('messageContent');
-            const messageChoices = document.getElementById('messageChoices');
-            const messageSender = document.getElementById('messageSender');
-            const contactStatus = document.getElementById('contactStatus');
-            const closeMessages = document.getElementById('closeMessages');
-            const gameTitle = document.querySelector('.game-title'); // Added
-
-            // Game Title from GDD
-            gameTitle.textContent = 'Echoes';
-
-
-            // --- GAME CONTENT ---
-            // (This should ideally be in a JSON file)
-            const gameContent = [
-                // Step 0: Initial Awakening & Unease (Replaces original step 0)
-                {
-                    stepId: "intro_0", // Unique ID for potential state saving
-                    monologue: "The familiar weight of consciousness settles back in. Morning.\n\nThe weak sunlight slants through the blinds, striping the opposite wall in bars of grey and pale gold. Dust motes dance in the beams...\n\n<span class='internal-thought'>And yet... something's off.</span>\n\nIt's not a sound, not a smell. A feeling, deep down, like a skipped heartbeat in the rhythm of the world. My thoughts feel... thick. A thread of déjà vu clings to the moment, thin but sharp. This exact sequence... having happened mere moments ago.",
-                    choices: [
-                        { text: "Sit up and look around.", nextStep: 1 }
-                    ],
-                    messageEvent: null
-                },
-                // Step 1: Rationalization & First Specific Doubt (Replaces original step 1)
-                {
-                    stepId: "intro_1",
-                    monologue: "<span class='internal-thought'>Did time just... ripple?</span>\n\nNo. That's ridiculous. Sleep fog. Stress...\n\nI stand, stretching, trying to shake the feeling. The room resolves into its usual shape: the worn armchair, the cluttered desk, clothes draped over the chair... exactly where I left them last night. <span class='internal-thought'>Or... did I?</span> Suddenly, I can't quite grasp the memory of *undressing*, of dropping them there. The memory feels painted on, thin and brittle.",
-                    choices: [
-                        { text: "Shake it off. It's just another day.", nextStep: 2 },
-                        { text: "Focus on getting coffee.", nextStep: 2 } // Both lead to same place for now
-                    ],
-                    messageEvent: null
-                },
-                 // Step 2: Heading to Kitchen, Lingering Doubt (Replaces original step 2 & leads to anomaly)
-                {
-                    stepId: "intro_2",
-                    monologue: "I head towards the kitchen, the strange sense of dissonance clinging like static electricity. The air feels heavy with unspoken questions.\n\nEverything looks normal. Perfectly, unnervingly normal.\n\nBut beneath the surface, something feels fragile. Like tapping your finger against a mirror, expecting solid glass, and hearing only the thin, hollow echo of uncertainty reverberate back.",
-                    choices: [
-                        { text: "Make coffee. Routine helps.", nextStep: 3 }
-                    ],
-                    messageEvent: null
-                },
-                 // Step 3: The Anomaly - Date & Mug (Adapted from original prototype step 1)
-                {
-                    stepId: "anomaly_date_mug",
-                    monologue: "My hand hovers over the coffee maker. Routine grounds me, usually. But where *is* that mug? Wasn't it by the bed last night? \n\nI glance at my phone resting on the counter. The screen glows faintly. The date reads Thursday, October 26th.\n\n<span class='internal-thought'>Again?</span> I could swear yesterday was Thursday too. The 26th.",
-                    choices: [
-                        { text: "Check the calendar app.", nextStep: 4 },
-                        { text: "Look around the room more carefully for the mug.", nextStep: 5 }
-                    ],
-                    messageEvent: null
-                },
-                 // Step 4: Calendar Check (Adapted from original prototype step 2)
-                {
-                    stepId: "anomaly_calendar",
-                    monologue: "The calendar app confirms: Thursday, October 26th. Clean. No trace of yesterday's meetings, the reminder about Alex's birthday dinner... nothing. Just today's schedule, sparse and unfamiliar. I don't remember putting any of this in.",
-                    choices: [
-                        { text: "This must be a phone glitch. Restart it.", nextStep: 6 },
-                        { text: "Maybe I'm just really out of it.", nextStep: 6 }, // Leads to message
-                        { text: "Something is fundamentally wrong here.", nextStep: 7 } // Leads to message
-                    ],
-                    messageEvent: null
-                },
-                 // Step 5: Room Search (Adapted from original prototype step 3)
-                {
-                    stepId: "anomaly_room_details",
-                    monologue: "Okay, focus. Where did I put that mug? Scanning the room again... No, not by the bed. Not on the desk.\n\nWait. The books on the shelf... they're slightly rearranged. The thriller I finished isn't on top anymore. And the candle on the nightstand... it's burned down way further than it should have overnight. As if it burned for hours while I slept.",
-                    choices: [
-                        { text: "Check the notebook on the desk.", nextStep: 8 },
-                        { text: "This is too weird. Check the phone again.", nextStep: 4 } // Loop back to check calendar
-                    ],
-                    messageEvent: null
-                },
-                // Step 6: Rationalization / Dismissal leads to Message (Combines original steps 4 & 5 logic)
-                {
-                    stepId: "rationalize_message",
-                    monologue: "Right. A glitch, or I'm just incredibly forgetful today. Deep breaths. Maybe the coffee will actually help once I find a mug...\n\nSuddenly, my phone buzzes. Not a call, a message notification. From an 'Unknown Number'.",
-                    choices: [
-                         { text: "Check the message.", nextStep: 9 } // Only logical choice
-                    ],
-                    messageEvent: {
-                        sender: "Unknown Number",
-                        content: "The loop tightens. Check the coffee mug. It remembers."
-                    }
-                },
-                 // Step 7: Acceptance of Wrongness leads to Message (Combines original steps 4 & 5 logic)
-                {
-                    stepId: "accept_message",
-                    monologue: "No glitch explains this. The date, the calendar, the candle... It's like the world reset itself, but kept me. How is that possible?\n\nMy phone buzzes sharply on the counter. A message. 'Unknown Number'.",
-                     choices: [
-                         { text: "Read the message.", nextStep: 9 } // Only logical choice
-                    ],
-                   messageEvent: {
-                        sender: "Unknown Number",
-                        content: "You're awake this time. Good. Check the coffee mug. Proof."
-                    }
-                },
-                // Step 8: Notebook Check (Adapted from original prototype step 6)
-                {
-                    stepId: "notebook_check",
-                    monologue: "The small spiral notebook lies open on the desk. My handwriting stares back at me, but the words feel alien:\n\n*'October 26th. It happened again. Thursday. Woke up, déjà vu stronger this time. Calendar wiped. Candle low. How many loops? Felt the ripple on waking. Must leave a better clue. Check the coffee mug.'*\n\nMy blood runs cold. This... this isn't possible.",
-                    choices: [
-                        { text: "Find the coffee mug. NOW.", nextStep: 10 }
-                    ],
-                    messageEvent: null // Message likely received already or comes next
-                },
-                // Step 9: After reading initial message (Leads to Mug Check)
-                {
-                    stepId: "received_first_message",
-                    monologue: "A message... telling me to check the mug? Who is this? How do they know what I'm experiencing?\n\nThe message stares back from the screen, simple, direct, and deeply unsettling.",
-                     choices: [
-                        { text: "Okay, check the damn coffee mug.", nextStep: 10 }
-                    ],
-                    messageEvent: null // Message was just delivered
-                },
-                 // Step 10: Mug Check & Note (Adapted from original prototype step 7)
-                {
-                    stepId: "mug_note",
-                    monologue: "There it is. Tucked behind the kettle. My favorite ceramic mug. I pick it up... and there's a small, folded piece of paper underneath. Smooth, crisp, unlike the slightly worn paper in my notebook.\n\nI unfold it. My own handwriting again, precise and urgent:\n\n*'Reality reset confirmed. This is not the first Thursday. They are watching. Echo knows more. Don't trust the system.'*",
-                    choices: [
-                        { text: "Reply to the unknown number.", nextStep: 11 }
-                    ],
-                    messageEvent: null
-                },
-                // Step 11: Preparing to Reply (Adapted from original prototype step 8)
-                 {
-                    stepId: "prepare_reply",
-                    monologue: "<span class='internal-thought'>Echo... who or what is Echo? And who are 'they'?</span> My hands tremble slightly as I bring up the message thread. The cursor blinks, waiting.",
-                    choices: [
-                        // Choices now appear in the message interface
-                        { text: "Who are you?", nextStep: 12 },
-                        { text: "Are you Echo?", nextStep: 12 },
-                        { text: "What does 'reality reset' mean?", nextStep: 12 },
-                        { text: "How do you know about this?", nextStep: 12 }
-                    ],
-                    messageEvent: null // Player initiates next message
-                },
-                // Step 12: Waiting for Reply (Adapted from original prototype step 9)
-                {
-                    stepId: "wait_reply_echo",
-                    monologue: "Message sent. Now... I wait. Staring at the screen, the silence of the apartment feels heavy, watchful. Every tick of the clock seems unnaturally loud.",
-                    choices: [
-                        // No choices here, waiting for the message event
-                    ],
-                    messageEvent: {
-                        sender: "Echo", // Sender name changes
-                        content: "I am a fragment. A memory you tried to erase. 'They' are the architects. IRIS maintains the illusion. This loop... it's a failsafe. Or a cage. We need to talk, carefully. The system flags anomalies."
-                    }
-                },
-                // Step 13: Received Echo's Reply
-                {
-                    stepId: "received_echo_reply",
-                    monologue: "IRIS? Architects? A cage? The words swim before my eyes. This is bigger than just a repeating day. It's... everything.\n\n<span class='internal-thought'>What do I even ask? Where do I start?</span>",
-                    choices: [
-                         { text: "Who is IRIS?", nextStep: 14 },
-                         { text: "What is this loop?", nextStep: 14 },
-                         { text: "How do we talk carefully?", nextStep: 14 },
-                         { text: "Are you helping me or using me?", nextStep: 14 }
-                    ],
-                    messageEvent: null // Waiting for player choice
-                },
-                 // Step 14 onwards: Deeper conversation / investigation begins...
-                {
-                    stepId: "continue_convo",
-                    monologue: "The conversation continues, each message from Echo peeling back another layer of the impossible reality I inhabit.",
-                    choices: [
-                        // Further choices based on Echo's responses...
-                         { text: "(Placeholder) Ask about the 'Founding Generation'", nextStep: 15 },
-                         { text: "(Placeholder) Ask about the 'glitches'", nextStep: 15 }
-                    ],
-                    messageEvent: {
-                         sender: "Echo",
-                         content: "(Placeholder response depending on player's previous choice)"
-                    }
-                },
-                 // Step 15: Placeholder for future steps
-                {
-                    stepId: "placeholder_future",
-                    monologue: "The path forward is unclear, filled with digital ghosts and half-truths. But for the first time, I feel like I'm not alone in noticing the seams of this reality.",
-                    choices: [
-                        { text: "Continue investigation [END OF CURRENT DEMO]", nextStep: 15 }
-                    ],
-                    messageEvent: null
-                }
-                // --- END OF GAME CONTENT ---
-            ];
-
-
-            // Function to update game state and UI
-            function updateGame() {
-                // Find the content for the current step
-                const currentContent = gameContent.find(step => step.stepId === (gameContent[currentStep]?.stepId || "intro_0")) || gameContent[0];
-
-                 if (!currentContent) {
-                    console.error(`Game content for step index ${currentStep} not found.`);
-                    // Default to a safe state or display an error
-                    monologueText.textContent = "Error: Game content missing. Please restart.";
-                    choicesContainer.innerHTML = '';
-                    messageChoices.innerHTML = '';
-                    return;
-                }
-
-
-                // Update monologue text (using innerHTML to allow spans)
-                monologueText.innerHTML = currentContent.monologue;
-
-                // Clear previous choices
-                choicesContainer.innerHTML = '';
-                messageChoices.innerHTML = '';
-
-                // Determine if choices should appear in monologue or message view
-                // General rule: If the *next* step involves Echo responding, or if the player is *about* to message Echo, show choices in message view.
-                // Let's refine this: Step 11 (prepare_reply) and Step 13 (received_echo_reply) onwards should have choices in message view.
-                const showChoicesInMessages = [11, 13, 14].includes(currentStep); // Step indices requiring message choices
-
-                // Add new choices
-                currentContent.choices.forEach(choice => {
-                    const targetContainer = showChoicesInMessages ? messageChoices : choicesContainer;
-                    const buttonClass = showChoicesInMessages ? 'message-choice' : 'choice-button';
-
-                    const choiceBtn = document.createElement('button');
-                    choiceBtn.className = buttonClass;
-                    choiceBtn.innerHTML = choice.text; // Use innerHTML if choices might contain simple tags later
-                    choiceBtn.addEventListener('click', () => {
-                        // Add player message if choosing in message view
-                        if (showChoicesInMessages && activeView === 'message') {
-                            addMessage({
-                                sender: 'Me',
-                                content: choice.text, // Use innerHTML if needed, else textContent is safer
-                                isPlayer: true
-                            });
-                             // Clear message choices immediately after selection
-                            messageChoices.innerHTML = '';
-                        }
-                        handleChoice(choice);
-                    });
-                    targetContainer.appendChild(choiceBtn);
-                });
-
-
-                 // Automatically switch view if needed
-                 if (showChoicesInMessages && activeView !== 'message') {
-                    // If choices are meant for messages but we are in monologue, switch
-                     showMessageView();
-                 } else if (!showChoicesInMessages && activeView === 'message' && currentContent.choices.length > 0) {
-                    // If choices are meant for monologue but we are in messages, switch back
-                    // unless there are NO choices (e.g., waiting for Echo)
-                    showMonologueView();
-                 }
-
-
-                // Process message event if present
-                if (currentContent.messageEvent) {
-                    // Short delay before adding message for flow
-                    setTimeout(() => {
-                        addMessage({
-                            sender: currentContent.messageEvent.sender,
-                            content: currentContent.messageEvent.content,
-                            isPlayer: false
-                        });
-
-                         // Notify if not currently in message view
-                         if (activeView !== 'message') {
-                             hasNewMessage = true;
-                             messageBtn.classList.add('notify', 'pulse');
-                         } else {
-                            // If already in message view, ensure scroll happens after message appears
-                            setTimeout(() => messageContent.scrollTop = messageContent.scrollHeight, 50);
-                         }
-
-                        // If the message event happens and there are no choices,
-                        // automatically move to the *next* step associated with receiving this message
-                        // This requires linking: Find the step *after* the current one that expects player input based on this message.
-                        // For simplicity now, let's assume a message event *without* choices immediately transitions
-                        // *if* the next step in the array is designed for it.
-                         // Example: Step 12 receives a message, Step 13 presents choices based on it.
-                         if(currentContent.choices.length === 0) {
-                            // Find the next logical step (often currentStep + 1, but could be different)
-                            // This needs a more robust system than just +1 eventually.
-                            // For the current structure, let's assume it's +1 for steps like 12.
-                            if (currentStep === 12) { // Specific logic for step 12 transition
-                                setTimeout(() => { // Add a slight delay for reading
-                                     currentStep = 13; // Move to step 13 which has choices
-                                     updateGame();
-                                }, 1500); // Adjust delay as needed
-                            }
-                         }
-
-                    }, 500); // Delay before showing received message
-                }
-
-                // Update message sender name and status in header
-                updateMessageSender();
-
-                // Scroll monologue box to top
-                monologueBox.scrollTop = 0;
-            }
-
-            // Function to handle player choice
-            function handleChoice(choice) {
-                 // Find the index corresponding to the nextStep ID if possible
-                const nextStepIndex = gameContent.findIndex(step => step.stepId === choice.nextStep) ;
-
-                // Fallback to numerical index if stepId logic fails or isn't fully implemented
-                currentStep = (typeof choice.nextStep === 'number') ? choice.nextStep : nextStepIndex !== -1 ? nextStepIndex : (currentStep + 1);
-
-                // Basic boundary check
-                if (currentStep >= gameContent.length) {
-                    console.warn("Reached end of defined game content.");
-                    currentStep = gameContent.length - 1; // Stay on last step
-                }
-
-                updateGame();
-            }
-
-            // --- MESSAGE HANDLING FUNCTIONS ---
-
-            // Function to add a message to the state and UI
-            function addMessage(message) {
-                const now = new Date();
-                message.timestamp = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                messages.push(message);
-                updateMessageSender(); // Update header info
-
-                if (!message.isPlayer) {
-                    showTypingIndicator().then(() => {
-                        addMessageElement(message);
-                    });
-                } else {
-                    addMessageElement(message);
-                }
-            }
-
-            // Function to show typing indicator
-            function showTypingIndicator() {
-                 // Only show typing if the sender is Echo or Unknown
-                const lastSender = messages.length > 0 ? messages[messages.length - 1].sender : null;
-                 if (lastSender !== "Echo" && lastSender !== "Unknown Number" && messages.length > 0 && !messages[messages.length-1].isPlayer) {
-                    // Don't show typing for 'Me' or if last message wasn't from Echo/Unknown
-                    // This check might need refinement based on conversation flow
-                 }
-
-                return new Promise(resolve => {
-                    const typingIndicator = document.createElement('div');
-                    typingIndicator.className = 'typing-indicator';
-                    for (let i = 0; i < 3; i++) {
-                        const dot = document.createElement('div');
-                        dot.className = 'typing-dot';
-                        typingIndicator.appendChild(dot);
-                    }
-
-                    // Insert before the message choices/input area
-                     messageContent.appendChild(typingIndicator);
-                     messageContent.scrollTop = messageContent.scrollHeight; // Scroll down
-
-                    // Random typing delay
-                    const typingDelay = 800 + Math.random() * 1500;
-                    setTimeout(() => {
-                        // Check if indicator still exists before removing
-                         if (typingIndicator.parentNode) {
-                            typingIndicator.remove();
-                         }
-                        resolve();
-                    }, typingDelay);
-                });
-            }
-
-             // Function to add message element to the UI
-            function addMessageElement(message) {
-                const msgElement = document.createElement('div');
-                msgElement.className = `message-bubble ${message.isPlayer ? 'sent' : 'received'}`;
-
-                const msgText = document.createElement('div');
-                 // Use innerHTML carefully if content might contain safe HTML, otherwise textContent
-                msgText.textContent = message.content;
-                msgElement.appendChild(msgText);
-
-                const timestamp = document.createElement('span');
-                timestamp.className = 'timestamp';
-                timestamp.textContent = message.timestamp;
-                msgElement.appendChild(timestamp);
-
-                messageContent.appendChild(msgElement);
-                messageContent.scrollTop = messageContent.scrollHeight; // Scroll to bottom
-            }
-
-            // Function to update message sender display in header
-            function updateMessageSender() {
-                // Find the last *non-player* message to set the header
-                const lastNonPlayerMsg = [...messages].reverse().find(msg => !msg.isPlayer);
-                let currentContact = "ECHO"; // Default
-                let currentStatus = " "; // Default
-
-                if (lastNonPlayerMsg) {
-                    currentContact = lastNonPlayerMsg.sender.toUpperCase();
-                    if (currentContact === "ECHO") {
-                        currentStatus = "online";
-                    } else if (currentContact === "UNKNOWN NUMBER") {
-                         currentStatus = "last seen recently"; // Or just hide status?
-                    }
-                } else {
-                    // If no messages yet or only player messages
-                    currentContact = " "; // Hide contact name initially?
-                    currentStatus = " ";
-                }
-
-                messageSender.textContent = currentContact;
-                contactStatus.textContent = currentStatus;
-            }
-
-            // --- VIEW SWITCHING FUNCTIONS ---
-
-            function showMonologueView() {
-                monologueBox.style.display = 'block';
-                messageInterface.style.display = 'none';
-                activeView = 'monologue';
-                monologueBtn.classList.add('active');
-                messageBtn.classList.remove('active');
-                messageBtn.classList.remove('notify', 'pulse'); // Clear notification when switching away
-            }
-
-            function showMessageView() {
-                monologueBox.style.display = 'none';
-                messageInterface.style.display = 'block';
-                activeView = 'message';
-                monologueBtn.classList.remove('active');
-                messageBtn.classList.add('active');
-                hasNewMessage = false; // Mark as read
-                messageBtn.classList.remove('notify', 'pulse');
-                // Scroll message content to bottom when opened
-                setTimeout(() => messageContent.scrollTop = messageContent.scrollHeight, 50);
-            }
-
-
-            // --- INITIALIZATION ---
-            updateGame(); // Load initial state (Step 0)
-            showMonologueView(); // Start in monologue view
-
-            // --- EVENT LISTENERS ---
-            messageBtn.addEventListener('click', showMessageView);
-            monologueBtn.addEventListener('click', showMonologueView);
-            closeMessages.addEventListener('click', showMonologueView);
-
-        });
-    </script>
+    <!-- Scripts -->
+    <script type="module" src="js/main.js"></script>
+    <noscript>
+        <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); color: white; display: flex; align-items: center; justify-content: center; z-index: 9999; text-align: center; padding: 20px;">
+            <div>
+                <h2>JavaScript Required</h2>
+                <p>Echoes requires JavaScript to run. Please enable JavaScript in your browser settings and reload the page.</p>
+            </div>
+        </div>
+    </noscript>
 </body>
 </html>
