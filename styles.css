@@ -1,4 +1,161 @@
-/* styles.typing-dot:nth-child(1) { animation-delay: 0s; }
+/* ===== CONTACTS LIST VIEW ===== */
+
+.contacts-list {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--primary-dark);
+}
+
+.contacts-header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--primary-light);
+  border-bottom: 1px solid rgba(134, 150, 160, 0.2);
+}
+
+.contacts-header h2 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--primary-light);
+}
+
+.search-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--subtle-light);
+}
+
+.contacts-subtitle {
+  padding: 0.75rem 1rem 0.5rem;
+  font-size: 0.8rem;
+  color: var(--subtle-light);
+  letter-spacing: 0.05rem;
+}
+
+.contacts-circle-list {
+  display: flex;
+  padding: 0.5rem 1rem 1rem;
+  overflow-x: auto;
+  gap: 1rem;
+  border-bottom: 1px solid rgba(134, 150, 160, 0.2);
+}
+
+.contact-circle {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.circle-avatar {
+  width: 3.75rem;
+  height: 3.75rem;
+  border-radius: var(--radius-full);
+  background-color: var(--accent-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.contact-circle span {
+  font-size: 0.8125rem;
+  color: var(--primary-light);
+}
+
+.conversation-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.conversation-item {
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(134, 150, 160, 0.1);
+}
+
+.conversation-item:hover {
+  background-color: rgba(134, 150, 160, 0.1);
+}
+
+.conversation-item.active {
+  background-color: rgba(134, 150, 160, 0.15);
+}
+
+.conversation-avatar {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--radius-full);
+  background-color: #0E141A;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.conversation-info {
+  flex: 1;
+  min-width: 0; /* Allows text truncation to work */
+}
+
+.conversation-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.conversation-name {
+  font-weight: 500;
+  color: var(--primary-light);
+}
+
+.conversation-time {
+  color: var(--subtle-light);
+  font-size: 0.75rem;
+}
+
+.conversation-preview {
+  color: var(--subtle-light);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Conversation View */
+.conversation-view {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.back-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--subtle-light);
+  width: 1.875rem;
+  height: 1.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.5rem;
+}
+
+.back-button:hover {
+  color: var(--primary-light);
+}/* styles.typing-dot:nth-child(1) { animation-delay: 0s; }
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 
@@ -271,6 +428,75 @@
   background-color: #2d3748;
 }
 
+/* ===== SETTINGS MENU ===== */
+
+.settings-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 300;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(3px);
+}
+
+.settings-header {
+  padding: 1rem;
+  background-color: var(--primary-dark);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.settings-header h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.settings-content {
+  padding: 1rem;
+  overflow-y: auto;
+  background-color: #f8f9fa;
+  flex: 1;
+}
+
+.settings-section {
+  margin-bottom: 1.5rem;
+}
+
+.settings-section h3 {
+  font-size: 1.1rem;
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.settings-section p {
+  margin: 0.5rem 0;
+  color: #666;
+}
+
+.settings-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.settings-buttons button {
+  background-color: var(--subtle-dark);
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
 /* ===== UTILITY CLASSES ===== */
 
 .hidden {
@@ -279,6 +505,17 @@
 
 .visible {
   display: block;
+}
+
+.clickable {
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  color: #3182ce;
+}
+
+.glitch {
+  animation: glitch 0.3s ease;
 }
 
 .clickable {
@@ -377,7 +614,7 @@
       transform: scale(1.05);
     }
   }
-}css - Mobile-first CSS for Echoes */
+}
 
 /* ===== BASE STYLES (MOBILE FIRST) ===== */
 
@@ -548,7 +785,8 @@ html, body {
   padding: 1rem;
   z-index: 10;
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Changed to column */
+  justify-content: flex-end; /* Position content at bottom */
   align-items: center;
   overflow-y: auto;
 }
@@ -561,11 +799,15 @@ html, body {
   padding: 1.5rem;
   border-radius: var(--radius-lg);
   width: 100%;
+  max-width: 25rem; /* Reduced from previous size */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease;
-  max-height: 80vh;
+  max-height: 65vh; /* Reduced height */
   overflow-y: auto;
   margin-bottom: 4.5rem; /* Space for navigation */
+  /* Position in bottom half to allow background to be visible */
+  align-self: flex-end;
+  margin-bottom: 5.5rem; /* Extra space for nav */
 }
 
 .monologue-text {
@@ -630,6 +872,7 @@ html, body {
   position: relative;
 }
 
+/* Message header styling updated to match screenshot */
 .message-header {
   background-color: var(--primary-dark);
   padding: 1rem;
@@ -646,8 +889,8 @@ html, body {
 }
 
 .contact-avatar {
-  width: 2.8125rem;
-  height: 2.8125rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: var(--radius-full);
   margin-right: 0.75rem;
   background-color: #0E141A;
@@ -655,6 +898,12 @@ html, body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+}
+
+.contact-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .contact-info {
@@ -771,5 +1020,3 @@ html, body {
   border-radius: var(--radius-full);
   animation: typing-animation 1.4s infinite ease-in-out;
 }
-
-.

@@ -52,46 +52,93 @@
 
             <!-- Message interface -->
             <div id="messageInterface" class="message-interface">
-                <div class="message-header">
-                    <div class="message-contact">
-                        <div class="contact-avatar">
-                            <!-- Placeholder SVG Icon -->
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#8696A0">
-                                <path d="M12 2C6.48 0 2 4.48 2 10c0 7 10 12 10 12s10-5 10-12c0-5.52-4.48-10-10-10zm0 12.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                <div id="contactsList" class="contacts-list">
+                    <div class="contacts-header">
+                        <h2>Messages</h2>
+                        <div class="search-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                             </svg>
                         </div>
-                        <div class="contact-info">
-                            <div id="messageSender" class="message-sender">ECHO</div>
-                            <div id="contactStatus" class="contact-status">online</div>
+                    </div>
+                    <div class="contacts-subtitle">RECENT</div>
+                    <div class="contacts-circle-list">
+                        <div class="contact-circle">
+                            <div class="circle-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#E9EDEF">
+                                    <path d="M12 2C6.48 0 2 4.48 2 10c0 7 10 12 10 12s10-5 10-12c0-5.52-4.48-10-10-10zm0 12.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                                </svg>
+                            </div>
+                            <span>Echo</span>
                         </div>
                     </div>
-                    <div class="header-actions">
-                        <button id="closeMessages" class="close-button" aria-label="Close Messages">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                    <div class="conversation-list">
+                        <div class="conversation-item active" data-contact="Echo">
+                            <div class="conversation-avatar">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#8696A0">
+                                    <path d="M12 2C6.48 0 2 4.48 2 10c0 7 10 12 10 12s10-5 10-12c0-5.52-4.48-10-10-10zm0 12.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                                </svg>
+                            </div>
+                            <div class="conversation-info">
+                                <div class="conversation-top">
+                                    <span class="conversation-name">Echo</span>
+                                    <span class="conversation-time">08:43</span>
+                                </div>
+                                <div class="conversation-preview">The loop tightens. Check the coffee mug...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="conversationView" class="conversation-view hidden">
+                    <div class="message-header">
+                        <div class="message-contact">
+                            <div class="contact-avatar">
+                                <!-- Placeholder SVG Icon -->
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#8696A0">
+                                    <path d="M12 2C6.48 0 2 4.48 2 10c0 7 10 12 10 12s10-5 10-12c0-5.52-4.48-10-10-10zm0 12.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/>
+                                </svg>
+                            </div>
+                            <div class="contact-info">
+                                <div id="messageSender" class="message-sender">ECHO</div>
+                                <div id="contactStatus" class="contact-status">online</div>
+                            </div>
+                        </div>
+                        <div class="header-actions">
+                            <button id="backToContacts" class="back-button" aria-label="Back to Contacts">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                                    <polyline points="12 19 5 12 12 5"></polyline>
+                                </svg>
+                            </button>
+                            <button id="closeMessages" class="close-button" aria-label="Close Messages">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="messageContent" class="message-content">
+                        <!-- Messages will be added here dynamically -->
+                        <div class="message-date">Today</div>
+                    </div>
+
+                    <div id="messageChoices" class="message-choices">
+                        <!-- Message choices will be added here dynamically -->
+                    </div>
+
+                    <div class="message-input-area">
+                        <!-- Input area is disabled for now, choices are used -->
+                        <input type="text" class="message-input" placeholder="Select a choice above" disabled>
+                        <button class="send-button" disabled aria-label="Send Message">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                                <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
                             </svg>
                         </button>
                     </div>
-                </div>
-
-                <div id="messageContent" class="message-content">
-                    <!-- Messages will be added here dynamically -->
-                    <div class="message-date">Today</div>
-                </div>
-
-                <div id="messageChoices" class="message-choices">
-                    <!-- Message choices will be added here dynamically -->
-                </div>
-
-                <div class="message-input-area">
-                    <!-- Input area is disabled for now, choices are used -->
-                    <input type="text" class="message-input" placeholder="Select a choice above" disabled>
-                    <button class="send-button" disabled aria-label="Send Message">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
-                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>
-                        </svg>
-                    </button>
                 </div>
             </div>
         </div>

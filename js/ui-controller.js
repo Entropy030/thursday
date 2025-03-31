@@ -26,7 +26,11 @@ class UIController {
       contactStatus: document.getElementById('contactStatus'),
       closeMessages: document.getElementById('closeMessages'),
       gameContainer: document.querySelector('.game-container'),
-      overlay: document.querySelector('.overlay')
+      overlay: document.querySelector('.overlay'),
+      // New elements
+      contactsList: document.getElementById('contactsList'),
+      conversationView: document.getElementById('conversationView'),
+      backToContacts: document.getElementById('backToContacts')
     };
     
     // Initialize event listeners
@@ -50,6 +54,18 @@ class UIController {
     this.elements.messageBtn.addEventListener('click', () => this.showMessageView());
     this.elements.closeMessages.addEventListener('click', () => this.showMonologueView());
     
+    // New contact list navigation
+    this.elements.backToContacts.addEventListener('click', () => this.showContactsList());
+    
+    // Set up conversation item click handlers
+    const conversationItems = document.querySelectorAll('.conversation-item');
+    conversationItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const contactName = item.getAttribute('data-contact');
+        this.showConversationView(contactName);
+      });
+    });
+    
     // Game engine event listeners
     this.engine.addEventListener('nodeChanged', () => this.updateUI());
     this.engine.addEventListener('viewChanged', (data) => {
@@ -57,6 +73,11 @@ class UIController {
         this.showMonologueView(false); // Don't trigger another node change
       } else if (data.view === 'message') {
         this.showMessageView(false); // Don't trigger another node change
+        // Show the conversation view directly if we're in a message node
+        const currentNode = this.engine.getCurrentNode();
+        if (currentNode && (currentNode.type === 'messageReceived' || currentNode.type === 'messageChoices')) {
+          this.showConversationView();
+        }
       }
     });
     
@@ -407,14 +428,48 @@ class UIController {
     this.elements.messageBtn.classList.add('active');
     this.elements.messageBtn.classList.remove('notify', 'pulse');
     
-    // Scroll message content to bottom
-    setTimeout(() => {
-      this.elements.messageContent.scrollTop = this.elements.messageContent.scrollHeight;
-    }, 50);
+    // Determine whether to show contacts list or conversation
+    const currentNode = this.engine.getCurrentNode();
+    const hasActiveConversation = currentNode && 
+                                (currentNode.type === 'messageReceived' || 
+                                currentNode.type === 'messageChoices');
+    
+    if (hasActiveConversation) {
+      this.showConversationView();
+    } else {
+      this.showContactsList();
+    }
     
     if (updateEngine && this.engine.state.activeView !== 'message') {
       this.engine.setActiveView('message');
     }
+  }
+  
+  /**
+   * Show contacts list view
+   */
+  showContactsList() {
+    this.elements.contactsList.classList.remove('hidden');
+    this.elements.conversationView.classList.add('hidden');
+  }
+  
+  /**
+   * Show conversation view
+   * @param {string} contactName - Optional contact name to show
+   */
+  showConversationView(contactName) {
+    this.elements.contactsList.classList.add('hidden');
+    this.elements.conversationView.classList.remove('hidden');
+    
+    // Update contact name if provided
+    if (contactName) {
+      this.elements.messageSender.textContent = contactName.toUpperCase();
+    }
+    
+    // Scroll message content to bottom
+    setTimeout(() => {
+      this.elements.messageContent.scrollTop = this.elements.messageContent.scrollHeight;
+    }, 50);
   }
   
   /**
