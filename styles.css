@@ -43,6 +43,7 @@ html, body {
   color: var(--primary-dark);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #000; /* Ensure black background extends outside game container, avoids white edges on resize/large screens */
 }
 
 /* ===== LAYOUT ===== */
@@ -58,19 +59,7 @@ html, body {
   transition: background-image 0.5s ease-in-out;
   max-width: 1440px; /* Maximum width for ultra-wide screens */
   margin: 0 auto;
-  background-color: #000; /* Black background to avoid white edges */
-}
-
-/* Fix for white background on sides */
-html, body {
-  font-family: var(--body-font);
-  font-size: 16px; /* Base size for rem calculations */
-  height: 100%;
-  overflow: hidden;
-  color: var(--primary-dark);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #000; /* Ensure black background extends outside game container */
+  background-color: #000; /* Black background to avoid white edges if container doesn't fill screen */
 }
 
 /* Dark overlay */
@@ -510,10 +499,9 @@ html, body {
 /* Message content area */
 .message-content {
   padding: 0.9375rem;
-  height: calc(100% - 4.375rem - 7.5rem);
+  flex: 1;
+  min-height: 0;
   background-color: #0B141A;
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFx0lEQVR4nO2aW4hVVRjHf3PU0UbHvOXlYZwxs0yzGU2jC5lZGV0eKrNCu1Ah9VAPEdRTPURElkQXogeLIKnooTLCnuohKsXUIMyySGvQ0NHR0VFrHVfOf9hn9tln73P2OWe2h/OHxZm91re+y/9b37fWgcgcGMIABOsbVwMqM300O6jYV0h3YKTzvcdRF0V3AQsBpYDvwO1Dv1IEPckl0UeBb4Ahwqkzn7+cS2AJM7RTRocDzwG/AsznEbwNGAO8o8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FXtJDkwBHgE2AO8p8FX');
-  background-repeat: repeat;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
