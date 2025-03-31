@@ -827,20 +827,37 @@ html, body {
 }
 
 /* ===== TEXT ANIMATION SYSTEM ===== */
+
 .continue-indicator {
   position: absolute;
-  bottom: 0.75rem;
+  bottom: 0.5rem; /* Adjusted position slightly */
   right: 0.75rem;
-  color: rgba(0, 0, 0, 0.3);
-  font-size: 1rem;
-  animation: bounce 1.2s infinite;
+  /* color: rgba(0, 0, 0, 0.3); */ /* Color is now set by SVG fill */
+  opacity: 0.5; /* Use opacity for subtlety */
+  /* font-size: 1rem; */ /* Not needed for SVG */
+  animation: bounceIndicator 1.2s infinite ease-in-out; /* Changed animation name & timing */
   user-select: none;
   pointer-events: none;
+  line-height: 1; /* Prevent extra spacing */
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
+.continue-indicator svg {
+  display: block; /* Remove potential inline spacing */
+  width: 1em; /* Size relative to parent font size */
+  height: 1em;
+  fill: var(--subtle-dark); /* Use a theme color */
+}
+
+/* Refined animation */
+@keyframes bounceIndicator {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.5;
+   }
+  50% {
+    transform: translateY(-4px); /* Slightly less bounce */
+    opacity: 0.8;
+   }
 }
 
 /* Text animation styling */
