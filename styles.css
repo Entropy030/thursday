@@ -497,6 +497,45 @@
   transition: background-color 0.2s;
 }
 
+/* ===== TEXT ANIMATION SYSTEM ===== */
+.continue-indicator {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 1.25rem;
+  animation: bounce 1s infinite;
+  user-select: none;
+  pointer-events: none;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Text animation styling */
+.typing-cursor {
+  display: inline-block;
+  width: 0.5rem;
+  height: 1.2rem;
+  background-color: #000;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+  vertical-align: middle;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Character-by-character reveal animation */
+.char-reveal {
+  animation: fadeIn 0.1s forwards;
+  opacity: 0;
+}
+
 /* ===== UTILITY CLASSES ===== */
 
 .hidden {
@@ -1067,4 +1106,3 @@ html, body {
   border-radius: var(--radius-full);
   animation: typing-animation 1.4s infinite ease-in-out;
 }
-

@@ -1,7 +1,8 @@
-// ui-controller.js - Handles UI updates and user interactions
+// ui-controller.js - Updated to integrate the text animation system
 
 import GameEngine from './game-engine.js';
 import gameData from './game-data.js';
+import TextSystem from './textSystem.js';
 
 /**
  * UI Controller for Echoes
@@ -27,11 +28,18 @@ class UIController {
       closeMessages: document.getElementById('closeMessages'),
       gameContainer: document.querySelector('.game-container'),
       overlay: document.querySelector('.overlay'),
-      // New elements
+      // Contacts list related elements
       contactsList: document.getElementById('contactsList'),
       conversationView: document.getElementById('conversationView'),
       backToContacts: document.getElementById('backToContacts')
     };
+    
+    // Initialize text animation system
+    this.textSystem = new TextSystem({
+      monologueBox: this.elements.monologueBox,
+      textElement: this.elements.monologueText,
+      choicesElement: this.elements.choicesContainer
+    });
     
     // Initialize event listeners
     this.setupEventListeners();
@@ -54,7 +62,7 @@ class UIController {
     this.elements.messageBtn.addEventListener('click', () => this.showMessageView());
     this.elements.closeMessages.addEventListener('click', () => this.showMonologueView());
     
-    // New contact list navigation
+    // Contact list navigation
     this.elements.backToContacts.addEventListener('click', () => this.showContactsList());
     
     // Set up conversation item click handlers
@@ -147,28 +155,20 @@ class UIController {
   }
   
   /**
-   * Update monologue content and choices
+   * Update monologue content and choices - UPDATED FOR TEXT SYSTEM
    * @param {object} node - Current node data
    */
   updateMonologue(node) {
-    // Update monologue text
-    this.elements.monologueText.innerHTML = node.content;
+    // Convert choices to the format expected by the text system
+    const textSystemChoices = node.choices ? node.choices.map(choice => ({
+      text: choice.text,
+      callback: () => {
+        this.engine.makeChoice(choice);
+      }
+    })) : [];
     
-    // Clear previous choices
-    this.elements.choicesContainer.innerHTML = '';
-    
-    // Add new choices if available
-    if (node.choices && node.choices.length > 0) {
-      node.choices.forEach(choice => {
-        const choiceBtn = document.createElement('button');
-        choiceBtn.className = 'choice-button';
-        choiceBtn.innerHTML = choice.text;
-        choiceBtn.addEventListener('click', () => {
-          this.engine.makeChoice(choice);
-        });
-        this.elements.choicesContainer.appendChild(choiceBtn);
-      });
-    }
+    // Set text with animation
+    this.textSystem.setText(node.content, textSystemChoices);
     
     // Check for available anomalies to log
     if (node.availableAnomalies && node.availableAnomalies.length > 0) {
@@ -237,13 +237,23 @@ class UIController {
     const puzzle = gameData.puzzles[node.puzzleId];
     if (!puzzle) return;
     
-    // Set monologue text
-    this.elements.monologueText.innerHTML = node.content;
-    
+    // Set monologue text - use text system for puzzle description
+    this.textSystem.setText(node.content, [], () => {
+      // Create puzzle interface after text is complete
+      this.createPuzzleInterface(node, puzzle);
+    });
+  }
+  
+  /**
+   * Create puzzle interface after text is displayed
+   * @param {object} node - Current node
+   * @param {object} puzzle - Puzzle data
+   */
+  createPuzzleInterface(node, puzzle) {
     // Clear previous choices
     this.elements.choicesContainer.innerHTML = '';
     
-    // Create puzzle interface
+    // Create puzzle container
     const puzzleContainer = document.createElement('div');
     puzzleContainer.className = 'puzzle-container';
     
