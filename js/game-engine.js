@@ -64,6 +64,15 @@ class GameEngine {
   }
   
   /**
+   * Get localized text by key
+   * @param {string} key - Locale key
+   * @returns {string} - Localized text or key if not found
+   */
+  getText(key) {
+    return gameData.locale[key] || key;
+  }
+  
+  /**
    * Navigate to a new node
    * @param {string} nodeId - ID of the node to navigate to
    */

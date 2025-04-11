@@ -1,75 +1,263 @@
 {
-    "intro_awakening": {
-      "type": "monologue",
-      "content_key": "node_intro_awakening_content",
-      "environment": "bedroom",
-      "choices": [
-        {
-          "text_key": "node_intro_awakening_choice1_text",
-          "nextNodeId": "intro_rationalization"
-        }
-      ]
-    },
-    "intro_rationalization": {
-      "type": "monologue",
-      "content_key": "node_intro_rationalization_content",
-      "environment": "bedroom",
-      "choices": [
-        {
-          "text_key": "node_intro_rationalization_choice1_text",
-          "nextNodeId": "intro_heading_kitchen",
-          "effects": { "selfDoubt": -1 }
-        },
-        {
-          "text_key": "node_intro_rationalization_choice2_text",
-          "nextNodeId": "intro_heading_kitchen"
-        }
-      ]
-    },
-    "intro_heading_kitchen": {
-      "type": "monologue",
-      "content_key": "node_intro_heading_kitchen_content",
-      "environment": "kitchen",
-      "choices": [
-        {
-          "text_key": "node_intro_heading_kitchen_choice1_text",
-          "nextNodeId": "anomaly_date_mug"
-        }
-      ]
-    },
-    "anomaly_date_mug": {
-      "type": "monologue",
-      "content_key": "node_anomaly_date_mug_content",
-      "environment": "kitchen",
-      "choices": [
-        {
-          "text_key": "node_anomaly_date_mug_choice1_text",
-          "nextNodeId": "first_echo_message"
-          // Note: Changed nextNodeId here to trigger message based on original data logic
-        },
-        {
-          "text_key": "node_anomaly_date_mug_choice2_text",
-          "nextNodeId": "first_echo_message"
-          // Note: Changed nextNodeId here as well
-        }
-      ]
-    },
-    "first_echo_message": {
-      "type": "messageReceived",
-      "sender": "Unknown Number", // Or perhaps use a key if sender names need localization? For now, direct.
-      "content_key": "node_first_echo_message_content",
-      "choices": [
-        {
-          "text_key": "node_first_echo_message_choice1_text", // Maybe not needed if message auto-progresses? Depends on engine.
-          "nextNodeId": "prepare_reply" // Assuming this node exists/will be added
-        }
-      ]
-    }
-    // --- Add definitions for other nodes like "prepare_reply", "puzzle_solved_chen_cipher", etc. ---
-    // "prepare_reply": { ... },
-    // "wait_reply_echo": { ... },
-    // "keyword_loop_node": { ... },
-    // "keyword_iris_node": { ... },
-    // "puzzle_solved_chen_cipher": { ... },
-    // "puzzle_failed_chen_cipher": { ... }
+  "intro_awakening": {
+    "type": "monologue",
+    "content_key": "node_awakening_content",
+    "environment": "bedroom",
+    "choices": [
+      {
+        "text_key": "node_awakening_choice1_text",
+        "nextNodeId": "scan_room"
+      },
+      {
+        "text_key": "node_awakening_choice2_text",
+        "nextNodeId": "recall_memory"
+      }
+    ]
+  },
+  "scan_room": {
+    "type": "monologue",
+    "content_key": "node_scan_room_content",
+    "environment": "bedroom",
+    "choices": [
+      {
+        "text_key": "node_scan_room_choice1_text",
+        "nextNodeId": "check_calendar"
+      },
+      {
+        "text_key": "node_scan_room_choice2_text",
+        "nextNodeId": "heading_kitchen",
+        "effects": { "selfDoubt": -1 }
+      }
+    ]
+  },
+  "recall_memory": {
+    "type": "monologue",
+    "content_key": "node_recall_content",
+    "environment": "bedroom",
+    "choices": [
+      {
+        "text_key": "node_recall_choice1_text",
+        "nextNodeId": "check_calendar"
+      },
+      {
+        "text_key": "node_recall_choice2_text",
+        "nextNodeId": "heading_kitchen",
+        "effects": { "selfDoubt": -1 }
+      }
+    ]
+  },
+  "check_calendar": {
+    "type": "monologue",
+    "content_key": "node_check_calendar_content",
+    "environment": "bedroom",
+    "choices": [
+      {
+        "text_key": "node_check_calendar_choice1_text",
+        "nextNodeId": "search_evidence",
+        "effects": { "selfDoubt": 1 }
+      },
+      {
+        "text_key": "node_check_calendar_choice2_text",
+        "nextNodeId": "heading_kitchen"
+      }
+    ]
+  },
+  "search_evidence": {
+    "type": "monologue",
+    "content_key": "node_search_evidence_content",
+    "environment": "bedroom",
+    "choices": [
+      {
+        "text_key": "node_search_evidence_choice1_text",
+        "nextNodeId": "heading_kitchen",
+        "effects": { "alexRelationship": 1 }
+      },
+      {
+        "text_key": "node_search_evidence_choice2_text",
+        "nextNodeId": "heading_kitchen"
+      }
+    ]
+  },
+  "heading_kitchen": {
+    "type": "monologue",
+    "content_key": "node_heading_kitchen_content",
+    "environment": "kitchen",
+    "choices": [
+      {
+        "text_key": "node_heading_kitchen_choice1_text",
+        "nextNodeId": "make_coffee"
+      },
+      {
+        "text_key": "node_heading_kitchen_choice2_text",
+        "nextNodeId": "search_kitchen",
+        "effects": { "selfDoubt": 1 }
+      }
+    ]
+  },
+  "make_coffee": {
+    "type": "monologue",
+    "content_key": "node_make_coffee_content",
+    "environment": "kitchen",
+    "choices": [
+      {
+        "text_key": "node_make_coffee_choice1_text",
+        "nextNodeId": "find_mug",
+        "effects": { "selfDoubt": 1 }
+      },
+      {
+        "text_key": "node_make_coffee_choice2_text",
+        "nextNodeId": "different_mug",
+        "effects": { "selfDoubt": -1 }
+      }
+    ]
+  },
+  "search_kitchen": {
+    "type": "monologue",
+    "content_key": "node_search_kitchen_content",
+    "environment": "kitchen",
+    "choices": [
+      {
+        "text_key": "node_search_kitchen_choice1_text",
+        "nextNodeId": "different_mug",
+        "effects": { "selfDoubt": -1 }
+      },
+      {
+        "text_key": "node_search_kitchen_choice2_text",
+        "nextNodeId": "find_mug",
+        "effects": { "selfDoubt": 1 }
+      }
+    ]
+  },
+  "find_mug": {
+    "type": "monologue",
+    "content_key": "node_find_mug_content",
+    "environment": "living_room",
+    "choices": [
+      {
+        "text_key": "node_find_mug_choice1_text",
+        "nextNodeId": "first_echo_message"
+      }
+    ]
+  },
+  "different_mug": {
+    "type": "monologue",
+    "content_key": "node_different_mug_content",
+    "environment": "kitchen",
+    "choices": [
+      {
+        "text_key": "node_different_mug_choice1_text",
+        "nextNodeId": "first_echo_message"
+      }
+    ]
+  },
+  "first_echo_message": {
+    "type": "messageReceived",
+    "sender": "Unknown",
+    "content_key": "node_first_message_content",
+    "choices": [
+      {
+        "text_key": "node_first_message_choice1_text",
+        "nextNodeId": "ask_sender"
+      },
+      {
+        "text_key": "node_first_message_choice2_text",
+        "nextNodeId": "examine_mug"
+      }
+    ]
+  },
+  "examine_mug": {
+    "type": "monologue",
+    "content_key": "node_examine_mug_content",
+    "environment": "living_room",
+    "choices": [
+      {
+        "text_key": "node_examine_mug_choice1_text",
+        "nextNodeId": "ask_sender"
+      },
+      {
+        "text_key": "node_examine_mug_choice2_text",
+        "nextNodeId": "search_anomalies"
+      }
+    ]
+  },
+  "ask_sender": {
+    "type": "messageChoices",
+    "content_key": "node_ask_sender_content",
+    "messageChoices": [
+      {
+        "text": "What do you mean by 'iterations'?",
+        "nextNodeId": "iterations_question"
+      },
+      {
+        "text": "What anomalies? What's happening to me?",
+        "nextNodeId": "anomalies_question"
+      }
+    ]
+  },
+  "search_anomalies": {
+    "type": "monologue",
+    "content_key": "node_search_anomalies_content",
+    "environment": "bathroom",
+    "choices": [
+      {
+        "text_key": "node_search_anomalies_choice1_text",
+        "nextNodeId": "second_echo_message"
+      }
+    ]
+  },
+  "iterations_question": {
+    "type": "messageChoices",
+    "content_key": "node_iterations_question_content",
+    "messageChoices": [
+      {
+        "text": "How do I break the loop?",
+        "nextNodeId": "second_echo_message"
+      },
+      {
+        "text": "I need proof. This is crazy.",
+        "nextNodeId": "second_echo_message"
+      }
+    ]
+  },
+  "anomalies_question": {
+    "type": "messageChoices",
+    "content_key": "node_anomalies_question_content",
+    "messageChoices": [
+      {
+        "text": "How do I break the loop?",
+        "nextNodeId": "second_echo_message"
+      },
+      {
+        "text": "I need more proof. This is crazy.",
+        "nextNodeId": "second_echo_message"
+      }
+    ]
+  },
+  "second_echo_message": {
+    "type": "messageReceived",
+    "sender": "Echo",
+    "content_key": "node_second_message_content",
+    "choices": [
+      {
+        "text_key": "node_second_message_choice1_text",
+        "nextNodeId": "mirror_anomaly"
+      }
+    ]
+  },
+  "mirror_anomaly": {
+    "type": "monologue",
+    "content_key": "node_mirror_anomaly_content",
+    "environment": "bathroom",
+    "choices": [
+      {
+        "text_key": "node_mirror_anomaly_choice1_text",
+        "nextNodeId": "touch_mirror"
+      },
+      {
+        "text_key": "node_mirror_anomaly_choice2_text",
+        "nextNodeId": "reject_reality",
+        "effects": { "selfDoubt": -2 }
+      }
+    ]
   }
+}

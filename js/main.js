@@ -1,24 +1,93 @@
 // main.js - Entry point for Echoes game
 
 import UIController from './ui-controller.js';
+import gameData from './game-data.js';
 
 // Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize the UI Controller
-  const ui = new UIController();
+document.addEventListener('DOMContentLoaded', async () => {
+  // Show loading indicator
+  showLoadingIndicator();
   
-  // Check for existing game session or show intro
-  if (localStorage.getItem('echoesGameState')) {
-    console.log('Resuming existing game session');
-  } else {
-    console.log('Starting new game session');
-  }
-  
-  // Add debug controls in development
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    addDebugControls(ui);
+  try {
+    // Initialize game data
+    await gameData.initialize();
+    
+    // Initialize the UI Controller
+    const ui = new UIController();
+    
+    // Check for existing game session or show intro
+    if (localStorage.getItem('echoesGameState')) {
+      console.log('Resuming existing game session');
+    } else {
+      console.log('Starting new game session');
+    }
+    
+    // Add debug controls in development
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+      addDebugControls(ui);
+    }
+    
+    // Hide loading indicator
+    hideLoadingIndicator();
+  } catch (error) {
+    console.error('Failed to initialize game:', error);
+    showErrorMessage();
   }
 });
+
+/**
+ * Show loading indicator
+ */
+function showLoadingIndicator() {
+  const loadingEl = document.createElement('div');
+  loadingEl.id = 'loadingIndicator';
+  loadingEl.className = 'loading-indicator';
+  loadingEl.innerHTML = `
+    <div class="loading-content">
+      <h2>Echoes</h2>
+      <div class="loading-dots">
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <p>Loading...</p>
+    </div>
+  `;
+  document.body.appendChild(loadingEl);
+}
+
+/**
+ * Hide loading indicator
+ */
+function hideLoadingIndicator() {
+  const loadingEl = document.getElementById('loadingIndicator');
+  if (loadingEl) {
+    loadingEl.classList.add('fade-out');
+    setTimeout(() => {
+      loadingEl.remove();
+    }, 500);
+  }
+}
+
+/**
+ * Show error message
+ */
+function showErrorMessage() {
+  const errorEl = document.createElement('div');
+  errorEl.className = 'error-message';
+  errorEl.innerHTML = `
+    <div class="error-content">
+      <h2>Error</h2>
+      <p>Failed to load game data. Please refresh the page or try again later.</p>
+      <button id="retryBtn">Retry</button>
+    </div>
+  `;
+  document.body.appendChild(errorEl);
+  
+  document.getElementById('retryBtn').addEventListener('click', () => {
+    window.location.reload();
+  });
+}
 
 /**
  * Add debug controls for development
@@ -60,11 +129,12 @@ function addDebugControls(ui) {
         <div class="settings-buttons">
           <button id="resetGameBtn">Reset Game</button>
           <button id="logStateBtn">Log State</button>
+          <button id="jumpToNodeBtn">Jump to Node</button>
         </div>
       </div>
       <div class="settings-section">
         <h3>About</h3>
-        <p>Echoes - v0.1.0</p>
+        <p>Echoes - v0.2.0</p>
         <p>A philosophical text adventure</p>
       </div>
     </div>
@@ -85,7 +155,7 @@ function addDebugControls(ui) {
   
   // Game control buttons
   document.getElementById('resetGameBtn').addEventListener('click', () => {
-    if (confirm('Reset game state?')) {
+    if (confirm('Reset game state? This will erase all progress.')) {
       ui.engine.resetState();
       ui.updateUI();
       settingsMenu.classList.add('hidden');
@@ -94,7 +164,16 @@ function addDebugControls(ui) {
   
   document.getElementById('logStateBtn').addEventListener('click', () => {
     console.log('Current game state:', ui.engine.state);
+    console.log('Current node:', ui.engine.getCurrentNode());
+  });
+  
+  document.getElementById('jumpToNodeBtn').addEventListener('click', () => {
+    const nodeId = prompt('Enter node ID to jump to:');
+    if (nodeId && nodeId.trim()) {
+      ui.engine.goToNode(nodeId.trim());
+      settingsMenu.classList.add('hidden');
+    }
   });
   
   console.log('Debug controls enabled');
-}
+} 0

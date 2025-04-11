@@ -1,36 +1,78 @@
 {
-    "env_bedroom_name": "Bedroom",
-    "env_bedroom_desc": "Your comfortable bedroom, familiar yet somehow unsettling.",
-    "env_kitchen_name": "Kitchen",
-    "env_kitchen_desc": "The small kitchen where you prepare your meals. Smells faintly of stale coffee.",
+  "env_bedroom_name": "Bedroom",
+  "env_bedroom_desc": "Your bedroom - familiar yet somehow unsettling today. Morning light filters through half-drawn blinds.",
+  "env_kitchen_name": "Kitchen",
+  "env_kitchen_desc": "A small but functional kitchen. The smell of stale coffee lingers in the air.",
+  "env_living_room_name": "Living Room",
+  "env_living_room_desc": "Your modest living room. Comfortable and well-worn, if not particularly stylish.",
+  "env_bathroom_name": "Bathroom",
+  "env_bathroom_desc": "A clean but cramped bathroom with aging fixtures. The fluorescent light flickers occasionally.",
+
+  "node_awakening_content": "Consciousness slams back in like a poorly timed jump scare. Morning.\n\nThe weak sunlight cuts through the blinds, striping the opposite wall in bars of grey and pale gold. Dust motes perform a lazy ballet in the beams.\n\n<span class='internal-thought'>And yet... something feels fundamentally *wrong*.</span>\n\nIt's not a noise, not a smell. Just a cold prickle down the spine, a glitch in the matrix feeling. My thoughts are wading through mud. A thread of déjà vu, sharp as a needle, insists this exact sequence... just happened.",
+  "node_awakening_choice1_text": "Sit up. Scan the room like a paranoid meerkat.",
+  "node_awakening_choice2_text": "Close your eyes. Try to recall what's bothering you.",
   
-    "kw_loop_title": "The Loop",
-    "kw_loop_desc": "A repeating cycle. Like a broken record skipping on the turntable of reality. Or maybe just a bad case of déjà vu.",
-    "kw_iris_title": "IRIS",
-    "kw_iris_desc": "Integrated Restoration Intelligence System. Dr. Chen's masterpiece AI, designed to reboot Earth after the Scourge. Supposedly benign. Supposedly.",
+  "node_scan_room_content": "I jerk upright, heart pounding like it's trying to escape my ribcage. My eyes dart around the room.\n\nBed. Desk. Window. Closet. All normal.\n\nThe phone on the nightstand shows 7:16 AM. Thursday, October 26th.\n\n<span class='internal-thought'>Wait. Wasn't yesterday Thursday too?</span>\n\nI rub my eyes. That sticky feeling of time doubling back on itself intensifies. Like the universe hiccuped and nobody noticed but me.",
+  "node_scan_room_choice1_text": "Check the phone calendar. Maybe I'm confused.",
+  "node_scan_room_choice2_text": "Get out of bed. Coffee will fix this.",
   
-    "pz_chen_title": "Chen Cipher",
-    "pz_chen_desc": "A complex decryption method developed by Dr. Sophia Chen. Rumored to be unbreakable without the right key... or the right insight.",
+  "node_recall_content": "I squeeze my eyes shut, trying to isolate the source of this unease.\n\nFragments come back. Last night. Dinner (pasta?). TV show (something about robots?). Bed at 11:30. Normal routines.\n\nBut the memories feel... thin. Like they're printed on gossamer rather than etched in my mind.\n\n<span class='internal-thought'>And wasn't yesterday Thursday? I distinctly remember looking at the date.</span>\n\nI open my eyes and glance at my phone. Thursday, October 26th.\n\n<span class='internal-thought'>That can't be right.</span>",
+  "node_recall_choice1_text": "Check the phone calendar. This has to be wrong.",
+  "node_recall_choice2_text": "Get out of bed. I need coffee.",
   
-    "node_intro_awakening_content": "Consciousness slams back in like a poorly timed jump scare. Morning.\n\nThe weak sunlight cuts through the blinds, striping the opposite wall in bars of grey and pale gold. Dust motes perform a lazy ballet in the beams...\n\n<span class='internal-thought'>And yet... something feels fundamentally *wrong*.</span>\n\nIt's not a noise, not a smell. Just a cold prickle down the spine, a glitch in the matrix feeling. My thoughts are wading through mud. A thread of déjà vu, sharp as a needle, insists this exact sequence... just happened.",
-    "node_intro_awakening_choice1_text": "Sit up. Scan the room like a paranoid meerkat.",
+  "node_check_calendar_content": "I fumble for my phone, navigating to the calendar app.\n\nOctober 26th. Thursday.\n\nBut yesterday was... I flick back, checking the previous day.\n\nOctober 25th. Wednesday.\n\n<span class='internal-thought'>That's what the calendar says. But it feels *wrong*. I could swear yesterday was Thursday. The same Thursday.</span>\n\nA strange thought creeps in: What if I'm experiencing the same day twice? Or what if my memory of yesterday is just... fabricated?",
+  "node_check_calendar_choice1_text": "Look for yesterday's evidence. Receipts, messages, anything.",
+  "node_check_calendar_choice2_text": "Get up and make coffee. My brain isn't working right.",
   
-    "node_intro_rationalization_content": "<span class='internal-thought'>Did time just... stutter? Rebuffer?</span>\n\nNo. That's insane. Must be sleep fog. Or maybe I dreamt the last two minutes. Yeah, that's it. Totally plausible.\n\nI heave myself out of bed, stretching. The room snaps into focus: worn armchair, cluttered desk, clothes draped haphazardly... exactly as they should be. <span class='internal-thought'>Except... did I *actually* drop them there last night?</span> The memory feels thin, like a badly photoshopped image.",
-    "node_intro_rationalization_choice1_text": "Dismiss it. Just another perfectly normal Thursday. Again.",
-    "node_intro_rationalization_choice2_text": "Coffee. Need coffee. Logic can wait.",
+  "node_search_evidence_content": "I start frantically searching for proof of yesterday.\n\nText messages? Last one from Alex was Tuesday night.\n\nEmail? Nothing from yesterday at all.\n\nBrowser history? Stops at Wednesday evening.\n\n<span class='internal-thought'>This is impossible. I *lived* yesterday. I remember it.</span>\n\nOr do I? The more I try to recall specific details, the more they dissolve like sugar in hot coffee. Not erased, just... indistinct.",
+  "node_search_evidence_choice1_text": "Call Alex. Maybe they remember yesterday.",
+  "node_search_evidence_choice2_text": "I need coffee before dealing with this.",
   
-    "node_intro_heading_kitchen_content": "Padding into the kitchen. The linoleum is cold underfoot, the silence oppressive.\n\nEverything appears normal. Perfectly, eerily normal. Too normal.\n\n<span class='internal-thought'>The air feels thick, charged. Like the moment before a storm breaks, or before the static shock you *know* is coming.</span>",
-    "node_intro_heading_kitchen_choice1_text": "Make coffee. Routine is the anchor in the storm of weirdness.",
+  "node_heading_kitchen_content": "I stumble out of bed, still disoriented by the date discrepancy. The floor feels cold under my feet as I make my way to the kitchen.\n\nEverything looks normal. Perfectly, eerily normal.\n\n<span class='internal-thought'>The air feels thick, charged. Like the moment before a storm breaks.</span>\n\nI reach for the coffee maker, determined to establish some normality through ritual.",
+  "node_heading_kitchen_choice1_text": "Make coffee. Maybe caffeine will restore sanity.",
+  "node_heading_kitchen_choice2_text": "Look around the kitchen for any anomalies.",
   
-    "node_anomaly_date_mug_content": "Muscle memory guides my hand towards the coffee maker. Ritual grounds me.\n\nBut wait – where’s my favorite chipped mug? The blue one? Wasn't it on the nightstand?\n\nMy phone lies face up on the counter, screen dimly lit. Thursday, October 26th.\n\n<span class='internal-thought'>Again? Seriously?</span>\n\nOkay, denial isn't working. Yesterday was *definitely* Thursday, October 26th. I'd bet my dwindling sanity on it.",
-    "node_anomaly_date_mug_choice1_text": "Check the calendar app. Maybe the phone's just trolling me.",
-    "node_anomaly_date_mug_choice2_text": "Forget the date. Find the damn mug. Priorities.",
+  "node_make_coffee_content": "Muscle memory guides my hand. Coffee grounds. Water. Button.\n\nThe machine gurgles to life, a comforting sound in this sea of uncertainty.\n\nI reach for my favorite mug... but it's not there. The blue one with the chip on the handle.\n\n<span class='internal-thought'>Where is it? I always leave it next to the coffee maker.</span>\n\nMy eyes catch the wall calendar. It confirms what my phone said. Thursday, October 26th.\n\nThe coffee maker beeps, but my unease only deepens.",
+  "node_make_coffee_choice1_text": "Look for the missing mug.",
+  "node_make_coffee_choice2_text": "Use a different mug. The blue one will turn up.",
   
-    "node_first_echo_message_content": "The loop tightens. Check the coffee mug. It remembers.",
-    "node_first_echo_message_choice1_text": "Okay..." // Text for the choice after receiving the message
+  "node_search_kitchen_content": "I scan the kitchen with suspicious eyes, searching for anything out of place.\n\nMy gaze lands on the wall calendar. Thursday, October 26th.\n\nThe countertop is clean - too clean? Didn't I spill some pasta sauce yesterday?\n\nMy favorite blue mug isn't by the coffee maker where I always leave it.\n\n<span class='internal-thought'>Something's definitely off.</span>",
+  "node_search_kitchen_choice1_text": "Make coffee anyway. Use a different mug.",
+  "node_search_kitchen_choice2_text": "Search for the missing blue mug.",
   
-    // --- Add text for all other keys from nodes, keywords, etc. ---
-    // "node_prepare_reply_content": "...",
-    // "node_prepare_reply_choice1_text": "Who are you?",
-    // ... etc ...
-  }
+  "node_find_mug_content": "I open cupboards, check the dish rack, even peek into the refrigerator (sleep-me has done stranger things).\n\nFinally, I spot it. The blue mug is sitting on the bookshelf in the living room. I never put it there.\n\nI pick it up, turning it over in my hands. There's something... different. The chip on the handle is gone. The mug looks brand new.\n\n<span class='internal-thought'>That's impossible. I've had this chipped mug for years.</span>\n\nSuddenly, my phone buzzes with a text message.",
+  "node_find_mug_choice1_text": "Check the message.",
+  
+  "node_different_mug_content": "I grab a plain white mug instead. Not my favorite, but it'll do.\n\nAs I pour the coffee, steam rising in lazy curls, I try to rationalize the situation. Memory is fallible. Calendars and phones aren't.\n\n<span class='internal-thought'>But I *know* what I remember.</span>\n\nMid-pour, my phone buzzes with a text message. The coffee splashes over the rim as I flinch.",
+  "node_different_mug_choice1_text": "Check the message.",
+  
+  "node_first_message_content": "The loop tightens. The blue mug knows. Look closer.",
+  "node_first_message_choice1_text": "Who is this? How did you get this number?",
+  "node_first_message_choice2_text": "Examine the blue mug again.",
+  
+  "node_examine_mug_content": "I study the mug with growing unease. Perfect blue ceramic. No chip.\n\nTurning it over, I notice something I missed before. Tiny text on the bottom, almost imperceptible:\n\n\"ITERATION #347\"\n\n<span class='internal-thought'>What the hell does that mean?</span>\n\nAs I set the mug down, my hand trembles. The world around me suddenly feels like an elaborate stage set, and I'm the only one who doesn't know my lines.",
+  "node_examine_mug_choice1_text": "Reply to the strange message.",
+  "node_examine_mug_choice2_text": "Look for other anomalies in the apartment.",
+  
+  "node_ask_sender_content": "I type a response, fingers trembling slightly.\n\n\"Who is this? How did you get my number?\"\n\nThree dots appear, then disappear. Then appear again. After an agonizing pause, the reply comes:\n\n\"I am Echo. I exist in the spaces between iterations. The mug is proof. Look for the anomalies. They are everywhere once you start seeing them.\"",
+  "node_ask_sender_choice1_text": "What do you mean by 'iterations'?",
+  "node_ask_sender_choice2_text": "What anomalies? What's happening to me?",
+  
+  "node_search_anomalies_content": "I set the mug down carefully, as if it might explode, and begin a methodical search of my apartment.\n\nIn the bathroom, the toothpaste is a brand I don't recognize.\n\nOn the bookshelf, several titles I don't remember buying.\n\nThe clock on the wall ticks... wrong. Like it's skipping microseconds.\n\nMy phone buzzes again with another message.",
+  "node_search_anomalies_choice1_text": "Check the message.",
+  
+  "node_iterations_question_content": "\"What do you mean by 'iterations'?\"\n\nThe reply comes faster this time:\n\n\"Time is not linear here. It loops. Resets. Yesterday was Thursday. Today is Thursday. Tomorrow will be Thursday. Until something changes.\"\n\n<span class='internal-thought'>This can't be real. Time loops? Is this person insane? Am *I* insane?</span>",
+  "node_iterations_question_choice1_text": "How do I break the loop?",
+  "node_iterations_question_choice2_text": "I need proof. This is crazy.",
+  
+  "node_anomalies_question_content": "\"What anomalies? What's happening to me?\"\n\nThe reply comes quickly:\n\n\"Reality is thin here. Wearing out from repetition. The mug regenerated. The date doubled. These are symptoms of the loop.\"\n\n<span class='internal-thought'>This sounds insane. Time loops? Reality wearing thin?</span>\n\nBut the mug... the perfect mug with no chip that I *know* was chipped yesterday...",
+  "node_anomalies_question_choice1_text": "How do I break the loop?",
+  "node_anomalies_question_choice2_text": "I need more proof. This is crazy.",
+  
+  "node_second_message_content": "Found the anomalies yet? There's one in your bathroom mirror. Look closely.",
+  "node_second_message_choice1_text": "Check the bathroom mirror.",
+  
+  "node_mirror_anomaly_content": "I enter the bathroom, heart pounding. The fluorescent light flickers as I approach the mirror.\n\nMy reflection looks normal at first. Me, disheveled, confused.\n\nBut as I lean closer, I notice it. My reflection's movements are ever so slightly delayed. Microseconds behind my own.\n\nI wave. The reflection waves a fraction too late.\n\n<span class='internal-thought'>This is impossible.</span>\n\nIn the corner of the mirror, almost hidden, I notice tiny text etched into the glass: \"ITERATION #347\"",
+  "node_mirror_anomaly_choice1_text": "Touch the mirror.",
+  "node_mirror_anomaly_choice2_text": "Step back. This can't be real."
+}

@@ -1,4 +1,4 @@
-// ui-controller.js - Updated to integrate the text animation system
+// ui-controller.js - Updated to integrate the text animation system and localization
 
 import GameEngine from './game-engine.js';
 import gameData from './game-data.js';
@@ -134,6 +134,15 @@ class UIController {
   }
   
   /**
+   * Helper method to get localized text 
+   * @param {string} key - Locale key
+   * @returns {string} - Localized text
+   */
+  getLocalizedText(key) {
+    return gameData.locale[key] || key;
+  }
+  
+  /**
    * Update the environment visuals
    * @param {string} environmentId - ID of the environment
    */
@@ -150,47 +159,58 @@ class UIController {
   }
   
   /**
-   * Update monologue content and choices - UPDATED FOR TEXT SYSTEM
+   * Update monologue content and choices - UPDATED FOR LOCALIZATION
    * @param {object} node - Current node data
    */
   updateMonologue(node) {
+    // Get localized content
+    const content = this.getLocalizedText(node.content_key);
+    
     // Convert choices to the format expected by the text system
     const textSystemChoices = node.choices ? node.choices.map(choice => ({
-      text: choice.text,
+      text: this.getLocalizedText(choice.text_key),
       callback: () => {
         this.engine.makeChoice(choice);
       }
     })) : [];
     
     // Set text with animation
-    this.textSystem.setText(node.content, textSystemChoices);
+    this.textSystem.setText(content, textSystemChoices);
   }
   
   /**
-   * Handle a received message node
+   * Handle a received message node - UPDATED FOR LOCALIZATION
    * @param {object} node - Current node data
    */
   handleMessageReceived(node) {
+    // Get localized content
+    const content = this.getLocalizedText(node.content_key);
+    
     // Show typing indicator then message
     this.showTypingIndicator(node.sender).then(() => {
       // Add the message to UI
-      this.addMessageToUI(node.sender, node.content, false);
+      this.addMessageToUI(node.sender, content, false);
       
       // Add choices if available
       if (node.choices && node.choices.length > 0) {
-        this.updateChoices(node.choices, this.elements.choicesContainer);
+        const localizedChoices = node.choices.map(choice => ({
+          ...choice,
+          text: this.getLocalizedText(choice.text_key)
+        }));
+        this.updateChoices(localizedChoices, this.elements.messageChoices);
       }
     });
   }
   
   /**
-   * Update message choices for response
+   * Update message choices for response - UPDATED FOR LOCALIZATION
    * @param {object} node - Current node data
    */
   updateMessageChoices(node) {
     // Update monologue text if applicable
-    if (node.content) {
-      this.elements.monologueText.innerHTML = node.content;
+    if (node.content_key) {
+      const content = this.getLocalizedText(node.content_key);
+      this.elements.monologueText.innerHTML = content;
     }
     
     // Clear previous choices
@@ -201,6 +221,7 @@ class UIController {
       node.messageChoices.forEach(choice => {
         const choiceBtn = document.createElement('button');
         choiceBtn.className = 'message-choice';
+        // Use direct text from messageChoices as they're already localized in the data
         choiceBtn.innerHTML = choice.text;
         choiceBtn.addEventListener('click', () => {
           // Add player message to UI
@@ -218,22 +239,25 @@ class UIController {
   }
   
   /**
-   * Update puzzle interface
+   * Update puzzle interface - UPDATED FOR LOCALIZATION
    * @param {object} node - Current node data
    */
   updatePuzzleUI(node) {
     const puzzle = gameData.puzzles[node.puzzleId];
     if (!puzzle) return;
     
+    // Get localized content
+    const content = this.getLocalizedText(node.content_key);
+    
     // Set monologue text - use text system for puzzle description
-    this.textSystem.setText(node.content, [], () => {
+    this.textSystem.setText(content, [], () => {
       // Create puzzle interface after text is complete
       this.createPuzzleInterface(node, puzzle);
     });
   }
   
   /**
-   * Create puzzle interface after text is displayed
+   * Create puzzle interface after text is displayed - UPDATED FOR LOCALIZATION
    * @param {object} node - Current node
    * @param {object} puzzle - Puzzle data
    */
@@ -245,11 +269,14 @@ class UIController {
     const puzzleContainer = document.createElement('div');
     puzzleContainer.className = 'puzzle-container';
     
+    // Get localized description
+    const puzzleDescription = this.getLocalizedText(puzzle.description_key);
+    
     // Different UI based on puzzle type
     // For now, we'll create a simple text input puzzle
     const puzzlePrompt = document.createElement('p');
     puzzlePrompt.className = 'puzzle-prompt';
-    puzzlePrompt.textContent = puzzle.description;
+    puzzlePrompt.textContent = puzzleDescription;
     
     const puzzleInput = document.createElement('input');
     puzzleInput.type = 'text';
@@ -283,12 +310,16 @@ class UIController {
   }
   
   /**
-   * Show keyword information
+   * Show keyword information - UPDATED FOR LOCALIZATION
    * @param {object} node - Current node data
    */
   showKeywordInfo(node) {
     const keyword = gameData.keywords[node.keyword];
     if (!keyword) return;
+    
+    // Get localized content
+    const title = this.getLocalizedText(keyword.title_key);
+    const description = this.getLocalizedText(keyword.description_key);
     
     // Create keyword info modal
     const modal = document.createElement('div');
@@ -297,11 +328,11 @@ class UIController {
     const modalContent = document.createElement('div');
     modalContent.className = 'keyword-modal-content';
     
-    const title = document.createElement('h3');
-    title.textContent = keyword.title;
+    const titleEl = document.createElement('h3');
+    titleEl.textContent = title;
     
-    const description = document.createElement('p');
-    description.textContent = keyword.description;
+    const descriptionEl = document.createElement('p');
+    descriptionEl.textContent = description;
     
     const closeButton = document.createElement('button');
     closeButton.className = 'keyword-close-btn';
@@ -318,8 +349,8 @@ class UIController {
     });
     
     // Assemble modal
-    modalContent.appendChild(title);
-    modalContent.appendChild(description);
+    modalContent.appendChild(titleEl);
+    modalContent.appendChild(descriptionEl);
     modalContent.appendChild(closeButton);
     modal.appendChild(modalContent);
     

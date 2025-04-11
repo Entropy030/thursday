@@ -1,14 +1,26 @@
 {
-    "bedroom": {
-      "name_key": "env_bedroom_name",
-      "description_key": "env_bedroom_desc",
-      "backgroundImage": "images/bedroom.jpg",
-      "objects": ["bed", "desk", "window", "closet", "phone"]
-    },
-    "kitchen": {
-      "name_key": "env_kitchen_name",
-      "description_key": "env_kitchen_desc",
-      "backgroundImage": "images/kitchen.jpg",
-      "objects": ["coffee_maker", "refrigerator", "table", "sink", "counter"]
-    }
+  "bedroom": {
+    "name_key": "env_bedroom_name",
+    "description_key": "env_bedroom_desc",
+    "backgroundImage": "images/bedroom.jpg",
+    "objects": ["bed", "desk", "window", "closet", "phone"]
+  },
+  "kitchen": {
+    "name_key": "env_kitchen_name",
+    "description_key": "env_kitchen_desc",
+    "backgroundImage": "images/kitchen.jpg",
+    "objects": ["coffee_maker", "refrigerator", "table", "sink", "counter"]
+  },
+  "living_room": {
+    "name_key": "env_living_room_name",
+    "description_key": "env_living_room_desc",
+    "backgroundImage": "images/living_room.jpeg",
+    "objects": ["couch", "tv", "bookshelf", "window", "coffee_table"]
+  },
+  "bathroom": {
+    "name_key": "env_bathroom_name",
+    "description_key": "env_bathroom_desc",
+    "backgroundImage": "images/bathroom.jpeg",
+    "objects": ["sink", "mirror", "shower", "toilet", "cabinet"]
   }
+}

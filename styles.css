@@ -186,40 +186,45 @@ html, body {
 /* ===== MONOLOGUE VIEW ===== */
 
 .monologue-box {
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(4px);
-  padding: 1rem 1.25rem;
+  /* --- NEW STYLES --- */
+  background-color: rgba(30, 36, 40, 0.9); /* Dark semi-transparent bg (slightly less transparent than nav) */
+  backdrop-filter: blur(8px); /* Apply background blur */
+  border: 1px solid rgba(134, 150, 160, 0.3); /* Subtle border using --subtle-light color */
+  color: var(--primary-light); /* Default text color for content inside */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Adjusted shadow for dark theme */
+  /* --- Keep existing layout styles --- */
+  padding: 1.25rem 1.5rem; /* Adjusted padding slightly */
   border-radius: 1rem;
   width: 85%;
   max-width: 26rem; /* Fixed optimal width */
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-  transition: opacity 0.3s ease; /* Only transition opacity, not size */
-  overflow-y: visible;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  position: fixed; /* Use fixed positioning like navigation */
-  bottom: 6rem; /* Position above navigation (1rem for nav bottom + 4rem nav height + 1rem spacing) */
+  transition: opacity 0.3s ease;
+  overflow-y: auto; /* Changed from visible to auto */
+  position: fixed;
+  bottom: 6rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 90; /* Below nav buttons but above other content */
-  max-height: calc(90vh - 6rem); /* Limit height on small screens */
-  overflow-y: auto; /* Allow scrolling if needed */
+  z-index: 90;
+  max-height: calc(90vh - 7rem); /* Adjusted max-height slightly */
 }
 
 .monologue-text {
-  font-family: var(--serif-font);
+  /* --- NEW STYLES --- */
+  font-family: var(--body-font); /* Changed from serif to body font */
+  color: var(--primary-light); /* Explicitly set light color */
+  /* --- Keep existing layout styles --- */
   font-size: 1rem;
-  line-height: 1.5;
-  color: #2d2d2d;
-  margin-bottom: 0.75rem;
+  line-height: 1.6; /* Slightly increased line height */
+  margin-bottom: 1rem; /* Adjusted margin */
   white-space: pre-wrap;
   letter-spacing: 0.01rem;
 }
 
 .internal-thought {
   font-style: italic;
-  color: #4a5568;
+  color: var(--subtle-light); /* Use subtle light color for contrast */
   display: block;
-  margin: 0.5rem 0;
+  margin: 0.75rem 0; /* Adjusted margin */
+  /* You could add a faint prefix like content: "> "; if desired */
 }
 
 /* Choices */
@@ -231,28 +236,33 @@ html, body {
 }
 
 .choice-button {
-  background-color: rgba(235, 242, 250, 0.85);
-  color: #3a3a3a;
-  border: 1px solid rgba(200, 215, 235, 0.5);
-  padding: 0.75rem 1rem;
+  /* --- NEW STYLES --- */
+  background-color: var(--subtle-dark); /* Use subtle dark for base */
+  color: var(--primary-light); /* Light text */
+  border: 1px solid rgba(134, 150, 160, 0.4); /* Subtle border */
+  box-shadow: none; /* Remove previous light shadow */
+  /* --- Keep existing layout/interaction styles --- */
+  padding: 0.8rem 1rem; /* Adjusted padding */
   border-radius: 0.75rem;
-  text-align: center;
+  text-align: left; /* Align text left like messages */
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.1s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
   font-size: 0.9375rem;
-  font-family: var(--body-font);
+  font-family: var(--body-font); /* Ensure body font */
   width: 100%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.choice-button:hover, 
+.choice-button:hover,
 .choice-button:focus {
-  background-color: rgba(220, 232, 247, 0.95);
-  transform: translateY(-1px);
+  background-color: var(--secondary-color); /* Use accent color for hover */
+  border-color: var(--secondary-color); /* Match border to background */
+  color: var(--primary-light); /* Keep text light */
+  transform: translateY(-1px); /* Keep subtle lift */
 }
 
 .choice-button:active {
   transform: translateY(0);
+  background-color: var(--accent-color); /* Slightly darker accent on click */
 }
 
 /* ===== MESSAGE INTERFACE ===== */
@@ -842,10 +852,10 @@ html, body {
 }
 
 .continue-indicator svg {
-  display: block; /* Remove potential inline spacing */
-  width: 1em; /* Size relative to parent font size */
+  display: block;
+  width: 1em;
   height: 1em;
-  fill: var(--subtle-dark); /* Use a theme color */
+  fill: var(--subtle-light); /* Use subtle light color */
 }
 
 /* Refined animation */
@@ -915,6 +925,106 @@ html, body {
 .glitch {
   animation: glitch 0.3s ease;
 }
+
+
+/* Loading Indicator */
+.loading-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  transition: opacity 0.5s ease;
+}
+
+.loading-indicator.fade-out {
+  opacity: 0;
+}
+
+.loading-content {
+  text-align: center;
+  color: white;
+}
+
+.loading-content h2 {
+  font-size: 2rem;
+  font-family: var(--serif-font);
+  margin-bottom: 2rem;
+}
+
+.loading-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.loading-dots .dot {
+  width: 0.75rem;
+  height: 0.75rem;
+  background-color: white;
+  border-radius: 50%;
+  animation: loading-dot-animation 1.4s infinite ease-in-out both;
+}
+
+.loading-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loading-dot-animation {
+  0%, 80%, 100% { 
+    transform: scale(0);
+  } 
+  40% { 
+    transform: scale(1);
+  }
+}
+
+/* Error Message */
+.error-message {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.error-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  max-width: 80%;
+  text-align: center;
+}
+
+.error-content h2 {
+  color: #e53e3e;
+  margin-bottom: 1rem;
+}
+
+.error-content button {
+  background-color: var(--primary-dark);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+
+.error-content button:hover {
+  background-color: #2d3748;
+}
+
 
 /* ===== MEDIA QUERIES (LARGER SCREENS) ===== */
 
